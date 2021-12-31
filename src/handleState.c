@@ -9,7 +9,11 @@ struct cpuState initState(void) {
 
     cpuState state;
 
-    state.memory = malloc(UINT16_MAX);
+    state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
+
+    if(NULL == state.memory){
+        exit(EXIT_FAILURE);
+    }
 
     state.HL = 0;
 

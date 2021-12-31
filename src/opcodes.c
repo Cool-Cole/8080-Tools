@@ -13,18 +13,18 @@
 
  */
 
+// TODO: Get an actual C programmers opinion on the two read/write functions below.
+// QUESTION: Is this Little Endian dependant?
+// WARNING: potential read error if PC is at uint16_MAX
 
-static inline uint16_t readShort(const uint8_t *restrict mem, const uint16_t address) {
+static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
+    // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
     return *(uint16_t *) ((uint8_t *) mem + address);
 }
 
-static inline void writeShort(const uint8_t *restrict mem, const uint16_t address, const uint16_t data) {
-    /*
-     * Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
-     *
-     * I don't know if the -1 is in correct but if I try to push a value onto the stack when the stack* is 0 it overwrites unallocated memory
-     * The -1 is also consistent with behavior from https://eliben.org/js8080/
-     */
+static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
+    // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
+    // The -1 constant is consistent with behavior from https://eliben.org/js8080/
     *(uint16_t *) ((uint8_t *) mem + address - 1) = data;
 }
 
@@ -35,7 +35,6 @@ void NOP(cpuState *state) {
 
 // 0x01
 void LXI_BC(cpuState *state) {
-    // TODO: potential read error if PC is at uint16_MAX
     state->BC = readShort(state->memory, state->PC + 1);
 
     state->PC += 2;
@@ -1942,11 +1941,35 @@ void CZ(cpuState *state) {
 
 // 0xcd
 void CALL(cpuState *state) {
+
     state->PC += 3;
 
-    state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
-    state->PC = readShort(state->memory, state->PC - 2);
+    if (5 == readShort(state->memory, state->PC - 2))
+    {
+        if (state->C == 9)
+        {
+            uint16_t offset = state->DE;
+            char *str = &state->memory[offset+3];  //skip the prefix bytes
+            while (*str != '$')
+                printf("%c", *str++);
+            printf("\n");
+        }
+        else if (state->C == 2)
+        {
+            //saw this in the inspected code, never saw it called
+            printf ("print char routine called\n");
+        }
+    }
+    else if (0 == readShort(state->memory, state->PC - 2))
+    {
+        exit(0);
+    }
+    else {
+
+        state->SP -= 2;
+        writeShort(state->memory, state->SP, state->PC);
+        state->PC = readShort(state->memory, state->PC - 2);
+    }
 }
 
 // 0xce
