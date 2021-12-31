@@ -1944,27 +1944,20 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
-    if (5 == readShort(state->memory, state->PC - 2))
-    {
-        if (state->C == 9)
-        {
+    if (5 == readShort(state->memory, state->PC - 2)) {
+        if (state->C == 9) {
             uint16_t offset = state->DE;
-            char *str = &state->memory[offset+3];  //skip the prefix bytes
+            char *str = &state->memory[offset + 3];//skip the prefix bytes
             while (*str != '$')
                 printf("%c", *str++);
             printf("\n");
-        }
-        else if (state->C == 2)
-        {
+        } else if (state->C == 2) {
             //saw this in the inspected code, never saw it called
-            printf ("print char routine called\n");
+            printf("print char routine called\n");
         }
-    }
-    else if (0 == readShort(state->memory, state->PC - 2))
-    {
+    } else if (0 == readShort(state->memory, state->PC - 2)) {
         exit(0);
-    }
-    else {
+    } else {
 
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
