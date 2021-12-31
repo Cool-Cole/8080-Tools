@@ -658,6 +658,38 @@ void XTHL(cpuState *state);
 // 0xe4
 void CPO(cpuState *state);
 
+// 0xe5
+void PUSH_H(cpuState *state);
+
+// 0xe6
+void ANI(cpuState *state);
+
+// 0xe7
+void RST_4(cpuState *state);
+
+// 0xe8
+void RPE(cpuState *state);
+
+// 0xe9
+void PCHL(cpuState *state);
+
+// 0xea
+void JPE(cpuState *state);
+
+// 0xeb
+void XCHG(cpuState *state);
+
+// 0xec
+void CPE(cpuState *state);
+
+// 0xee
+void XRI(cpuState *state);
+
+// 0xef
+void RST_5(cpuState *state);
+
+// 0xf0
+void RP(cpuState *state);
 
 // 0xf1
 void POP_PSW(cpuState *state);
@@ -665,8 +697,35 @@ void POP_PSW(cpuState *state);
 // 0xf2
 void JP(cpuState *state);
 
+// 0xf4
+void CP(cpuState *state);
+
 // 0xf5
 void PUSH_PSW(cpuState *state);
+
+// 0xf6
+void ORI(cpuState *state);
+
+// 0xf7
+void RST_6(cpuState *state);
+
+// 0xf8
+void RM(cpuState *state);
+
+// 0xf9
+void SPHL(cpuState *state);
+
+// 0xfa
+void JM(cpuState *state);
+
+// 0xfc
+void CM(cpuState *state);
+
+// 0xfe
+void CPI(cpuState *state);
+
+// 0xff
+void RST_7(cpuState *state);
 
 
 #endif//INC_8080EMU_OPCODES_H

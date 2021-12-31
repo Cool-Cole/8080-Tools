@@ -14,21 +14,11 @@
  */
 
 
-void unimplementedOpcode(cpuState *state) {
-    printf("0x%02x unimplemented...\nQuitting.", state->memory[state->PC]);
-    exit(1);
-}
-
-/*
-static inline uint8_t readByte(uint8_t* mem, uint16_t address){
-    return mem[address];
-}
-*/
-static inline uint16_t readShort(const uint8_t* restrict mem, const uint16_t address) {
+static inline uint16_t readShort(const uint8_t *restrict mem, const uint16_t address) {
     return *(uint16_t *) ((uint8_t *) mem + address);
 }
 
-static inline void writeShort(const uint8_t* restrict mem, const uint16_t address, const uint16_t data) {
+static inline void writeShort(const uint8_t *restrict mem, const uint16_t address, const uint16_t data) {
     /*
      * Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
      *
@@ -2356,13 +2346,19 @@ void JM(cpuState *state) {
 }
 
 // 0xfc
-void CM(cpuState *state){
+void CM(cpuState *state) {
+    state->PC += 3;
 
+    if (state->flags.sign) {
+        state->SP -= 2;
+        writeShort(state->memory, state->SP, state->PC);
+        state->PC = readShort(state->memory, state->PC - 2);
+    }
 }
 
 
 // 0xfe
-void CPI(cpuState *state){
+void CPI(cpuState *state) {
     uint16_t answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
@@ -2377,7 +2373,7 @@ void CPI(cpuState *state){
 }
 
 // 0xff
-void RST(cpuState *state){
+void RST_7(cpuState *state) {
     state->SP -= 2;
     writeShort(state->memory, state->SP, state->PC);
     state->PC = 0x0038;
