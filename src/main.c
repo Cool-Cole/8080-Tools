@@ -42,7 +42,7 @@ int main() {
 }
 
 
-void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset){
+void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset) {
     // JP Test
     //uint8_t m[15] = {0x3C, 0x3C, 0x3C, 0xF2, 0x0B, 0x00, 0x04, 0x04, 0xC3, 0x0D, 0x00, 0x0C, 0x0C, 0x14, 0x14};
 
@@ -52,9 +52,9 @@ void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset){
 
     FILE *rfp;
 
-    rfp = fopen(filePath,"rb");
+    rfp = fopen(filePath, "rb");
 
-    if(NULL == rfp){
+    if (NULL == rfp) {
         printf("Could not open %s\nQuitting...\n", filePath);
         exit(EXIT_FAILURE);
     }
@@ -63,7 +63,7 @@ void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset){
     size_t fileSize = ftell(rfp);
     fseek(rfp, 0, SEEK_SET);
 
-    if(UINT16_MAX < fileSize + memOffset){
+    if (UINT16_MAX < fileSize + memOffset) {
         printf("The ROM cannot fit in program memory.\n Quitting...");
         exit(EXIT_FAILURE);
     }

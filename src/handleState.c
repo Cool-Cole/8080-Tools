@@ -11,7 +11,7 @@ struct cpuState initState(void) {
 
     state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
 
-    if(NULL == state.memory){
+    if (NULL == state.memory) {
         exit(EXIT_FAILURE);
     }
 
