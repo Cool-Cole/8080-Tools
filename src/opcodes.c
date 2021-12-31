@@ -6,12 +6,6 @@
 
 #include <stdlib.h>
 
-/*
-
- // If the arithmetic operation overflows then set the carry flag
-    state->flags.carry = 0;
-
- */
 
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
 // QUESTION: Is this Little Endian dependant?
