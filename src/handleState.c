@@ -70,6 +70,7 @@ int emulateState(cpuState *state) {
         case 0xdb:// IN D8
         case 0xdd:
         case 0xed:
+        case 0xf3:// DI
         case 0xfb:// EI
         case 0xfd:
             NOP(state);
@@ -717,37 +718,37 @@ int emulateState(cpuState *state) {
             CPO(state);
             break;
         case 0xe5:
-            unimplementedOpcode(state);
+            PUSH_H(state);
             break;
         case 0xe6:
-            unimplementedOpcode(state);
+            ANI(state);
             break;
         case 0xe7:
-            unimplementedOpcode(state);
+            RST_4(state);
             break;
         case 0xe8:
-            unimplementedOpcode(state);
+            RPE(state);
             break;
         case 0xe9:
-            unimplementedOpcode(state);
+            PCHL(state);
             break;
         case 0xea:
-            unimplementedOpcode(state);
+            JPE(state);
             break;
         case 0xeb:
-            unimplementedOpcode(state);
+            XCHG(state);
             break;
         case 0xec:
-            unimplementedOpcode(state);
+            CPE(state);
             break;
         case 0xee:
-            unimplementedOpcode(state);
+            XRI(state);
             break;
         case 0xef:
-            unimplementedOpcode(state);
+            RST_5(state);
             break;
         case 0xf0:
-            unimplementedOpcode(state);
+            RP(state);
             break;
         case 0xf1:
             POP_PSW(state);
@@ -755,38 +756,35 @@ int emulateState(cpuState *state) {
         case 0xf2:
             JP(state);
             break;
-        case 0xf3:
-            unimplementedOpcode(state);
-            break;
         case 0xf4:
-            unimplementedOpcode(state);
+            CP(state);
             break;
         case 0xf5:
             PUSH_PSW(state);
             break;
         case 0xf6:
-            unimplementedOpcode(state);
+            ORI(state);
             break;
         case 0xf7:
-            unimplementedOpcode(state);
+            RST_6(state);
             break;
         case 0xf8:
-            unimplementedOpcode(state);
+            RM(state);
             break;
         case 0xf9:
-            unimplementedOpcode(state);
+            SPHL(state);
             break;
         case 0xfa:
-            unimplementedOpcode(state);
+            JM(state);
             break;
         case 0xfc:
-            unimplementedOpcode(state);
+            CM(state);
             break;
         case 0xfe:
-            unimplementedOpcode(state);
+            CPI(state);
             break;
         case 0xff:
-            unimplementedOpcode(state);
+            RST_7(state);
             break;
     }
 
