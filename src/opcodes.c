@@ -14,16 +14,6 @@
  */
 
 
-void unimplementedOpcode(cpuState *state) {
-    printf("0x%02x unimplemented...\nQuitting.", state->memory[state->PC]);
-    exit(1);
-}
-
-/*
-static inline uint8_t readByte(uint8_t* mem, uint16_t address){
-    return mem[address];
-}
-*/
 static inline uint16_t readShort(const uint8_t *restrict mem, const uint16_t address) {
     return *(uint16_t *) ((uint8_t *) mem + address);
 }
