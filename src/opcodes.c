@@ -1907,7 +1907,7 @@ void RZ(cpuState *state) {
 
 // 0xc9
 void RET(cpuState *state) {
-    state->PC = readShort(state->memory, state->SP);
+    state->PC = readShort(state->memory, state->SP - 1);
     state->SP += 2;
 }
 

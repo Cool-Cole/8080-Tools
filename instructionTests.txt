@@ -5,6 +5,7 @@
 //uint8_t m[15] = {0x3C,0x3C, 0x3C,0x3C,0x3C,0xF5,0x3C,0x3C, 0x3c, 0xF1};
 
 ------------
+XTHL TEST
 
 mvi h, 04h
 mvi l, 3ch
@@ -20,3 +21,27 @@ END
 a:	01	b:	01	c:	00	d:	00	e:	00
 h:	00	l:	00	pc:	000E	sp:	0008	halted:	0
 --------------------------
+CALL TEST
+
+inr a
+inr a
+call end
+inr c
+inr c
+jmp endend
+inr d
+end:
+inr b
+inr b
+ret
+inr d
+
+endend:
+nop
+
+uint8_t m[15] = {0x3C, 0x3C, 0xCD, 0x0B, 0x00, 0x0C, 0x0C, 0xC3, 0x0F, 0x00, 0x14, 0x04, 0x04, 0xC9, 0x14};
+
+a:	02	b:	02	c:	02	d:	00	e:	00
+h:	00	l:	00	pc:	0015	sp:	0000	halted:	0
+Sign:	00	Zero:	00	Parity:	00	Carry:	00
+
