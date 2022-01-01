@@ -13,13 +13,13 @@
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
-    return *(uint16_t *) ((uint8_t *) mem + address);
+    return *(uint16_t *)(mem + address);
 }
 
 static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
     // The -1 constant is consistent with behavior from https://eliben.org/js8080/
-    *(uint16_t *) ((uint8_t *) mem + address - 1) = data;
+    *(uint16_t *)(mem + address - 1) = data;
 }
 
 // 0x00
