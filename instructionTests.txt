@@ -44,4 +44,13 @@ uint8_t m[15] = {0x3C, 0x3C, 0xCD, 0x0B, 0x00, 0x0C, 0x0C, 0xC3, 0x0F, 0x00, 0x1
 a:	02	b:	02	c:	02	d:	00	e:	00
 h:	00	l:	00	pc:	0015	sp:	0000	halted:	0
 Sign:	00	Zero:	00	Parity:	00	Carry:	00
+-------------
+RRC tests
 
+mvi a, 1
+rrc
+
+
+uint8_t m[15] = {0x3E, 0x01, 0x0F};
+
+a:	0x80

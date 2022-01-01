@@ -12,10 +12,10 @@ int main() {
 
     cpuState state = initState();
 
-    uint8_t m[15] = {0x3C, 0x3C, 0xCD, 0x0B, 0x00, 0x0C, 0x0C, 0xC3, 0x0F, 0x00, 0x14, 0x04, 0x04, 0xC9, 0x14};
+    uint8_t m[15] = {0x3E, 0x01, 0x0F};
 
-    memcpy(state.memory, m, 15);
-    /*
+    memcpy(state.memory, m, 3);
+/*
     loadROM(&state, "C:\\Users\\Cole\\Sync\\CLion_Laptop\\8080EMU\\cpudiag.bin", 0x0100);
 
 
@@ -34,7 +34,7 @@ int main() {
     state.memory[0x59c] = 0xc3;//JMP
     state.memory[0x59d] = 0xc2;
     state.memory[0x59e] = 0x05;
-    */
+*/
     while (1) {
         emulateState(&state);
 

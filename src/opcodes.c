@@ -1940,12 +1940,13 @@ void CALL(cpuState *state) {
         if (state->C == 9) {
             uint16_t offset = state->DE;
             char *str = &state->memory[offset + 3];//skip the prefix bytes
+            printf("\n");
             while (*str != '$')
                 printf("%c", *str++);
-            printf("\n");
         } else if (state->C == 2) {
-            //saw this in the inspected code, never saw it called
-            printf("print char routine called\n");
+
+            printf("%c", state->E);
+            //printf("print char routine called\n");
         }
     } else if (0 == readShort(state->memory, state->PC - 2)) {
         exit(0);
