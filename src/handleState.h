@@ -12,7 +12,7 @@ typedef struct cpuFlags {
 } cpuFlags;
 
 typedef struct cpuState {
-    // WARNING: Little Endian dependant use of unions below.
+    // WARNING: Little Endian dependant use of unions below
     // WARNING: This code is not portable to Big Endian platforms.
 
     // HL register

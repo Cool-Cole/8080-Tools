@@ -393,7 +393,7 @@ void DCR_L(cpuState *state) {
 void MVI_L(cpuState *state) {
     state->L = state->memory[state->PC + 1];
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0x2f
@@ -487,8 +487,6 @@ void DCX_SP(cpuState *state) {
 
 // 0x3c
 void INR_A(cpuState *state) {
-    // TODO: Implement AuxCarry
-
     uint16_t answer = state->A + 1;
 
     state->A = answer & 0xff;
@@ -2128,8 +2126,8 @@ void JPO(cpuState *state) {
 
 // 0xe3
 void XTHL(cpuState *state) {
-    uint16_t temp = readShort(state->memory, state->SP - 2);
-    writeShort(state->memory, state->SP - 2, state->HL);
+    uint16_t temp = readShort(state->memory, state->SP + 1);
+    writeShort(state->memory, state->SP + 1, state->HL);
     state->HL = temp;
 
     state->PC += 1;
