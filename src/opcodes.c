@@ -1936,6 +1936,7 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
+    // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
             uint16_t offset = state->DE;
