@@ -12,14 +12,14 @@ int main() {
 
     cpuState state = initState();
 
-    uint8_t m[15] = {0x3E, 0x01, 0x0F};
+    //uint8_t m[15] = {0x3E, 0x01, 0x0F};
 
-    memcpy(state.memory, m, 3);
-/*
+    //memcpy(state.memory, m, 3);
+
     loadROM(&state, "C:\\Users\\Cole\\Sync\\CLion_Laptop\\8080EMU\\cpudiag.bin", 0x0100);
 
 
-    // TESTING CODE FROM http://emulator101.com/
+    // TESTING CODE FROM http://www.emulator101.com/full-8080-emulation.html
     //Fix the first instruction to be JMP 0x100
     state.memory[0] = 0xc3;
     state.memory[1] = 0;
@@ -34,7 +34,7 @@ int main() {
     state.memory[0x59c] = 0xc3;//JMP
     state.memory[0x59d] = 0xc2;
     state.memory[0x59e] = 0x05;
-*/
+
     while (1) {
         emulateState(&state);
 
