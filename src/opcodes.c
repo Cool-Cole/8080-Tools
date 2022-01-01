@@ -393,7 +393,7 @@ void DCR_L(cpuState *state) {
 void MVI_L(cpuState *state) {
     state->L = state->memory[state->PC + 1];
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0x2f
@@ -487,8 +487,6 @@ void DCX_SP(cpuState *state) {
 
 // 0x3c
 void INR_A(cpuState *state) {
-    // TODO: Implement AuxCarry
-
     uint16_t answer = state->A + 1;
 
     state->A = answer & 0xff;
@@ -1909,7 +1907,7 @@ void RZ(cpuState *state) {
 
 // 0xc9
 void RET(cpuState *state) {
-    state->PC = readShort(state->memory, state->SP);
+    state->PC = readShort(state->memory, state->SP - 1);
     state->SP += 2;
 }
 
@@ -1938,16 +1936,18 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
+    // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
             uint16_t offset = state->DE;
             char *str = &state->memory[offset + 3];//skip the prefix bytes
+            printf("\n");
             while (*str != '$')
                 printf("%c", *str++);
-            printf("\n");
         } else if (state->C == 2) {
-            //saw this in the inspected code, never saw it called
-            printf("print char routine called\n");
+
+            printf("%c", state->E);
+            //printf("print char routine called\n");
         }
     } else if (0 == readShort(state->memory, state->PC - 2)) {
         exit(0);
@@ -2128,8 +2128,8 @@ void JPO(cpuState *state) {
 
 // 0xe3
 void XTHL(cpuState *state) {
-    uint16_t temp = readShort(state->memory, state->SP - 2);
-    writeShort(state->memory, state->SP - 2, state->HL);
+    uint16_t temp = readShort(state->memory, state->SP + 1);
+    writeShort(state->memory, state->SP + 1, state->HL);
     state->HL = temp;
 
     state->PC += 1;
