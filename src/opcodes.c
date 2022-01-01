@@ -50,7 +50,7 @@ void INX_BC(cpuState *state) {
 
 // 0x04
 void INR_B(cpuState *state) {
-    uint16_t answer = (uint16_t) state->B + 1;
+    uint16_t answer = state->B + 1;
     state->B = answer & 0xff;
 
     // If the 7th bit is 1 then set the sign flag
@@ -67,7 +67,7 @@ void INR_B(cpuState *state) {
 
 // 0x05
 void DCR_B(cpuState *state) {
-    uint16_t answer = (uint16_t) state->B - 1;
+    uint16_t answer = state->B - 1;
     state->B = answer & 0xff;
 
     state->flags.sign = state->B >> 7;
@@ -88,7 +88,7 @@ void MVI_B(cpuState *state) {
 void RLC(cpuState *state) {
     state->flags.carry = state->A >> 7;
 
-    uint16_t answer = (uint16_t) state->A << 1;
+    uint16_t answer = state->A << 1;
 
     state->A = (answer & 0xff) | (state->A >> 8);
 
@@ -118,7 +118,7 @@ void DCX_BC(cpuState *state) {
 
 // 0x0c
 void INR_C(cpuState *state) {
-    uint16_t answer = (uint16_t) state->C + 1;
+    uint16_t answer = state->C + 1;
     state->C = answer & 0xff;
 
     state->flags.sign = state->C >> 7;
@@ -222,7 +222,7 @@ void RAL(cpuState *state) {
 void DAD_DE(cpuState *state) {
     uint32_t answer = state->HL + state->DE;
 
-    state->DE = (uint16_t) (answer & 0xffff);
+    state->DE = (answer & 0xffff);
 
     state->flags.carry = (answer > 0xffff);
 
@@ -245,7 +245,7 @@ void DCX_DE(cpuState *state) {
 
 // 0x1c
 void INR_E(cpuState *state) {
-    uint16_t answer = (uint16_t) state->E + 1;
+    uint16_t answer = state->E + 1;
     state->E = answer & 0xff;
 
     state->flags.sign = state->E >> 7;
@@ -257,7 +257,7 @@ void INR_E(cpuState *state) {
 
 // 0x1d
 void DCR_E(cpuState *state) {
-    uint16_t answer = (uint16_t) state->E - 1;
+    uint16_t answer = state->E - 1;
     state->E = answer & 0xff;
 
     state->flags.sign = state->E >> 7;
@@ -311,7 +311,7 @@ void INX_HL(cpuState *state) {
 
 // 0x24
 void INR_H(cpuState *state) {
-    uint16_t answer = (uint16_t) state->H + 1;
+    uint16_t answer = state->H + 1;
     state->H = answer & 0xff;
 
     state->flags.sign = state->H >> 7;
@@ -323,7 +323,7 @@ void INR_H(cpuState *state) {
 
 // 0x25
 void DCR_H(cpuState *state) {
-    uint16_t answer = (uint16_t) state->H - 1;
+    uint16_t answer = state->H - 1;
     state->H = answer & 0xff;
 
     state->flags.sign = state->H >> 7;
@@ -367,7 +367,7 @@ void DCX_HL(cpuState *state) {
 
 // 0x2c
 void INR_L(cpuState *state) {
-    uint16_t answer = (uint16_t) state->L + 1;
+    uint16_t answer = state->L + 1;
     state->L = answer & 0xff;
 
     state->flags.sign = state->L >> 7;
@@ -379,7 +379,7 @@ void INR_L(cpuState *state) {
 
 // 0x2d
 void DCR_L(cpuState *state) {
-    uint16_t answer = (uint16_t) state->L - 1;
+    uint16_t answer = state->L - 1;
     state->L = answer & 0xff;
 
     state->flags.sign = state->L >> 7;
