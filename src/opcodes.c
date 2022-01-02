@@ -1889,7 +1889,7 @@ void ADI(cpuState *state) {
     state->flags.carry = (0xff < answer);
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xc7

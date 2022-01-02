@@ -37,9 +37,6 @@ int main() {
 
     while (1) {
         emulateState(&state);
-
-        // Look into usleep instead
-        //sleep(1);
     }
 
     return EXIT_SUCCESS;
