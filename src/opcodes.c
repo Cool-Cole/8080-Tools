@@ -31,7 +31,7 @@ void NOP(cpuState *state) {
 void LXI_BC(cpuState *state) {
     state->BC = readShort(state->memory, state->PC + 1);
 
-    state->PC += 2;
+    state->PC += 3;
 }
 
 // 0x02
@@ -161,6 +161,8 @@ void RRC(cpuState *state) {
 // 0x11
 void LXI_DE(cpuState *state) {
     state->DE = readShort(state->memory, state->PC + 1);
+
+    state->PC += 3;
 }
 
 // 0x12
@@ -407,7 +409,7 @@ void CMA(cpuState *state) {
 void LXI_SP(cpuState *state) {
     state->SP = readShort(state->memory, state->PC + 1);
 
-    state->PC += 1;
+    state->PC += 3;
 }
 
 // 0x32
@@ -1845,7 +1847,7 @@ void POP_B(cpuState *state) {
 
 // 0xc2
 void JNZ(cpuState *state) {
-    if (0 != state->flags.zero) {
+    if (0 == state->flags.zero) {
         state->PC = readShort(state->memory, state->PC + 1);
     } else {
         state->PC += 3;
@@ -1887,7 +1889,7 @@ void ADI(cpuState *state) {
     state->flags.carry = (0xff < answer);
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xc7
@@ -2372,12 +2374,12 @@ void CPI(cpuState *state) {
     uint16_t answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
+    
+    uint8_t truncated = answer & 0xff;
 
-    state->A = answer & 0xff;
-
-    state->flags.sign = state->A >> 7;
-    state->flags.zero = (0 == state->A);
-    state->flags.parity = !(__builtin_popcount(state->A) & 1);
+    state->flags.sign = truncated >> 7;
+    state->flags.zero = (0 == truncated);
+    state->flags.parity = !(__builtin_popcount(truncated) & 1);
 
     state->PC += 2;
 }
