@@ -2374,12 +2374,12 @@ void CPI(cpuState *state) {
     uint16_t answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
+    
+    uint8_t truncated = answer & 0xff;
 
-    state->A = answer & 0xff;
-
-    state->flags.sign = state->A >> 7;
-    state->flags.zero = (0 == state->A);
-    state->flags.parity = !(__builtin_popcount(state->A) & 1);
+    state->flags.sign = truncated >> 7;
+    state->flags.zero = (0 == truncated);
+    state->flags.parity = !(__builtin_popcount(truncated) & 1);
 
     state->PC += 2;
 }
