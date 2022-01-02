@@ -25,7 +25,7 @@ int main() {
     state.memory[1] = 0;
     state.memory[2] = 0x01;
 
-    //Fix the stack pointer from 0x6ad to 0x7ad
+    // Fix the stack pointer from 0x6ad to 0x7ad
     // this 0x06 byte 112 in the code, which is
     // byte 112 + 0x100 = 368 in memory
     state.memory[368] = 0x7;
