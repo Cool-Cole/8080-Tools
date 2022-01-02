@@ -12,11 +12,9 @@ int main() {
 
     cpuState state = initState();
 
-    //uint8_t m[15] = {0x3E, 0x01, 0x0F};
-
-    //memcpy(state.memory, m, 3);
-
-    loadROM(&state, "C:\\Users\\Cole\\Sync\\CLion_Laptop\\8080EMU\\cpudiag.bin", 0x0100);
+    // PATH definition is the cwd as found by cmake
+    // TODO: Check to make sure this is OS independent, I think it is.
+    loadROM(&state, PATH "/testing_roms/cpudiag.bin", 0x0100);
 
 
     // TESTING CODE FROM http://www.emulator101.com/full-8080-emulation.html
