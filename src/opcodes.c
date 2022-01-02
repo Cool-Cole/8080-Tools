@@ -1856,6 +1856,12 @@ void JNZ(cpuState *state) {
 
 // 0xc3
 void JMP(cpuState *state) {
+
+    if(0x0000 == readShort(state->memory, state->PC + 1)){
+        printf("\nWBOOT addressed jumped to,\nQuitting...");
+        exit(EXIT_FAILURE);
+    }
+
     state->PC = readShort(state->memory, state->PC + 1);
 }
 
