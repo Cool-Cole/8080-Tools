@@ -1,14 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-
 #include <stdint.h>
 
 #include "handleState.h"
 
 void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset);
 
-int main() {
+int main(void) {
 
     cpuState state = initState();
 

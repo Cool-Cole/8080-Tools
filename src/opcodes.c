@@ -13,13 +13,13 @@
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
-    return *(uint16_t *)(mem + address);
+    return *(uint16_t *) (mem + address);
 }
 
 static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
     // The -1 constant is consistent with behavior from https://eliben.org/js8080/
-    *(uint16_t *)(mem + address - 1) = data;
+    *(uint16_t *) (mem + address - 1) = data;
 }
 
 // 0x00
@@ -1857,7 +1857,7 @@ void JNZ(cpuState *state) {
 // 0xc3
 void JMP(cpuState *state) {
 
-    if(0x0000 == readShort(state->memory, state->PC + 1)){
+    if (0x0000 == readShort(state->memory, state->PC + 1)) {
         printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
@@ -1978,7 +1978,7 @@ void ACI(cpuState *state) {
     state->flags.carry = (0xff < answer);
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xcf
@@ -2040,11 +2040,11 @@ void SUI(cpuState *state) {
 
     state->flags.carry = (0xff < answer);
 
-    answer = answer & 0xff;
+    state->A = answer & 0xff;
 
-    state->flags.sign = answer >> 7;
-    state->flags.zero = (0 == answer);
-    state->flags.parity = !(__builtin_popcount(answer) & 1);
+    state->flags.sign = state->A >> 7;
+    state->flags.zero = (0 == state->A);
+    state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
     state->PC += 2;
 }
@@ -2327,7 +2327,7 @@ void ORI(cpuState *state) {
     state->flags.carry = 0;
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xf7
@@ -2380,7 +2380,7 @@ void CPI(cpuState *state) {
     uint16_t answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
-    
+
     uint8_t truncated = answer & 0xff;
 
     state->flags.sign = truncated >> 7;
