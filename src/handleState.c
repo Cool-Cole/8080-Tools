@@ -7,7 +7,8 @@
 
 struct cpuState initState(void) {
 
-    // https://stackoverflow.com/a/155726
+    // Initialize all values in the structure to zero
+    // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
     state.memory = calloc(UINT16_MAX, sizeof(uint8_t));

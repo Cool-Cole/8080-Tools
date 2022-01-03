@@ -1830,7 +1830,7 @@ void CMP_A(cpuState *state) {
 // 0xc0
 void RNZ(cpuState *state) {
     if (state->flags.zero) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -1907,8 +1907,10 @@ void RST_0(cpuState *state) {
 
 // 0xc8
 void RZ(cpuState *state) {
+    state->PC += 1;
+
     if (state->flags.zero) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     }
 }
@@ -1991,7 +1993,7 @@ void RST_1(cpuState *state) {
 // 0xd0
 void RNC(cpuState *state) {
     if (!state->flags.carry) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -2059,7 +2061,7 @@ void RST_2(cpuState *state) {
 // 0xd8
 void RC(cpuState *state) {
     if (state->flags.carry) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -2110,7 +2112,7 @@ void RST_3(cpuState *state) {
 // 0xe0
 void RPO(cpuState *state) {
     if (!state->flags.parity) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -2186,7 +2188,7 @@ void RST_4(cpuState *state) {
 // 0xe8
 void RPE(cpuState *state) {
     if (state->flags.parity) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -2253,7 +2255,7 @@ void RST_5(cpuState *state) {
 // 0xf0
 void RP(cpuState *state) {
     if (state->flags.parity) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
@@ -2340,7 +2342,7 @@ void RST_6(cpuState *state) {
 // 0xf8
 void RM(cpuState *state) {
     if (state->flags.sign) {
-        state->PC = readShort(state->memory, state->SP);
+        state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
         state->PC += 1;
