@@ -13,13 +13,13 @@
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
-    return *(uint16_t *)(mem + address);
+    return *(uint16_t *) (mem + address);
 }
 
 static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
     // The -1 constant is consistent with behavior from https://eliben.org/js8080/
-    *(uint16_t *)(mem + address - 1) = data;
+    *(uint16_t *) (mem + address - 1) = data;
 }
 
 // 0x00
@@ -1857,7 +1857,7 @@ void JNZ(cpuState *state) {
 // 0xc3
 void JMP(cpuState *state) {
 
-    if(0x0000 == readShort(state->memory, state->PC + 1)){
+    if (0x0000 == readShort(state->memory, state->PC + 1)) {
         printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
@@ -2380,7 +2380,7 @@ void CPI(cpuState *state) {
     uint16_t answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
-    
+
     uint8_t truncated = answer & 0xff;
 
     state->flags.sign = truncated >> 7;

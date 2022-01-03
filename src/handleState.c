@@ -7,30 +7,14 @@
 
 struct cpuState initState(void) {
 
-    cpuState state;
+    // https://stackoverflow.com/a/155726
+    cpuState state = {0};
 
     state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
 
     if (NULL == state.memory) {
         exit(EXIT_FAILURE);
     }
-
-    state.HL = 0;
-
-    state.DE = 0;
-
-    state.BC = 0;
-
-    state.A = 0;
-
-    state.SP = 0;
-    state.PC = 0;
-
-    state.flags.sign = 0;
-    state.flags.zero = 0;
-    state.flags.auxCarry = 0;
-    state.flags.parity = 0;
-    state.flags.carry = 0;
 
     return state;
 }
