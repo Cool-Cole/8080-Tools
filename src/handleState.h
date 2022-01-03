@@ -48,6 +48,10 @@ typedef struct cpuState {
 
     uint8_t *memory;
 
+    // TODO: An underscore followed by a capital letter is reserved, what about a lower case letter?
+    struct cpuState *_nextState;
+    struct cpuState *_previousState;
+
 } cpuState;
 
 struct cpuState initState(void);
