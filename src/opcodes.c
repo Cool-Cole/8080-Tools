@@ -1867,13 +1867,12 @@ void JMP(cpuState *state) {
 
 // 0xc4
 void CNZ(cpuState *state) {
+    state->PC += 3;
 
     if (0 == state->flags.zero) {
         writeShort(state->memory, state->SP - 2, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -1924,23 +1923,21 @@ void RET(cpuState *state) {
 
 // 0xca
 void JZ(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.zero) {
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
 // 0xcb
 void CZ(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.zero) {
         writeShort(state->memory, state->SP - 2, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2022,13 +2019,12 @@ void JNC(cpuState *state) {
 
 // 0xd4
 void CNC(cpuState *state) {
+    state->PC += 3;
 
     if (!state->flags.carry) {
         writeShort(state->memory, state->SP - 2, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2083,13 +2079,12 @@ void JC(cpuState *state) {
 
 // 0xdc
 void CC(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.carry) {
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2152,13 +2147,12 @@ void XTHL(cpuState *state) {
 
 // 0xe4
 void CPO(cpuState *state) {
+    state->PC += 3;
 
     if (!state->flags.parity) {
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2228,13 +2222,12 @@ void XCHG(cpuState *state) {
 
 // 0xec
 void CPE(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.parity) {
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2296,13 +2289,12 @@ void JP(cpuState *state) {
 
 // 0xf4
 void CP(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.parity) {
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
@@ -2375,13 +2367,12 @@ void JM(cpuState *state) {
 
 // 0xfc
 void CM(cpuState *state) {
+    state->PC += 3;
 
     if (state->flags.sign) {
         state->SP -= 2;
         writeShort(state->memory, state->SP, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
-    } else {
-        state->PC += 3;
     }
 }
 
