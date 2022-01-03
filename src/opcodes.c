@@ -1978,7 +1978,7 @@ void ACI(cpuState *state) {
     state->flags.carry = (0xff < answer);
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xcf
@@ -2327,7 +2327,7 @@ void ORI(cpuState *state) {
     state->flags.carry = 0;
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
-    state->PC += 1;
+    state->PC += 2;
 }
 
 // 0xf7
