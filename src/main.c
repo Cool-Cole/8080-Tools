@@ -6,7 +6,7 @@
 
 void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset);
 
-int main() {
+int main(void) {
 
     cpuState state = initState();
 
