@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <unistd.h>
+
 #include "handleState.h"
 
 void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset);
@@ -13,7 +15,6 @@ int main(void) {
     // PATH definition is the cwd as found by cmake
     // TODO: Check to make sure this is OS independent, I think it is.
     loadROM(&state, PATH "/testing_roms/cpudiag.bin", 0x0100);
-
 
     // TESTING CODE FROM http://www.emulator101.com/full-8080-emulation.html
     //Fix the first instruction to be JMP 0x100
@@ -35,7 +36,7 @@ int main(void) {
         emulateState(&state);
     }
 
-    return EXIT_SUCCESS;
+    //return EXIT_SUCCESS;
 }
 
 
