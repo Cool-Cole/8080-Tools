@@ -50,8 +50,7 @@ void INX_BC(cpuState *state) {
 
 // 0x04
 void INR_B(cpuState *state) {
-    uint16_t answer = state->B + 1;
-    state->B = answer & 0xff;
+    state->B = state->B + 1;
 
     // If the 7th bit is 1 then set the sign flag
     state->flags.sign = state->B >> 7;
@@ -118,8 +117,7 @@ void DCX_BC(cpuState *state) {
 
 // 0x0c
 void INR_C(cpuState *state) {
-    uint16_t answer = state->C + 1;
-    state->C = answer & 0xff;
+    state->C = state->C + 1;
 
     state->flags.sign = state->C >> 7;
     state->flags.parity = !(__builtin_popcount(state->C) & 1);
@@ -181,8 +179,7 @@ void INX_DE(cpuState *state) {
 
 // 0x14
 void INR_D(cpuState *state) {
-    uint16_t answer = state->D + 1;
-    state->D = answer & 0xff;
+    state->D = state->D + 1;
 
     state->flags.sign = state->D >> 7;
     state->flags.parity = !(__builtin_popcount(state->D) & 1);
@@ -247,8 +244,7 @@ void DCX_DE(cpuState *state) {
 
 // 0x1c
 void INR_E(cpuState *state) {
-    uint16_t answer = state->E + 1;
-    state->E = answer & 0xff;
+    state->E = state->E + 1;
 
     state->flags.sign = state->E >> 7;
     state->flags.parity = !(__builtin_popcount(state->E) & 1);
@@ -313,8 +309,7 @@ void INX_HL(cpuState *state) {
 
 // 0x24
 void INR_H(cpuState *state) {
-    uint16_t answer = state->H + 1;
-    state->H = answer & 0xff;
+    state->H = state->H + 1;
 
     state->flags.sign = state->H >> 7;
     state->flags.parity = !(__builtin_popcount(state->H) & 1);
@@ -369,8 +364,7 @@ void DCX_HL(cpuState *state) {
 
 // 0x2c
 void INR_L(cpuState *state) {
-    uint16_t answer = state->L + 1;
-    state->L = answer & 0xff;
+    state->L = state->L + 1;
 
     state->flags.sign = state->L >> 7;
     state->flags.parity = !(__builtin_popcount(state->L) & 1);
@@ -428,10 +422,9 @@ void INX_SP(cpuState *state) {
 
 // 0x34
 void INR_M(cpuState *state) {
-    uint16_t answer = state->memory[state->HL] + 1;
-    state->memory[state->HL] = answer & 0xff;
+    state->memory[state->HL] = state->memory[state->HL] + 1;
 
-    state->flags.sign = answer >> state->memory[state->HL];
+    state->flags.sign = state->memory[state->HL] >> 7;
     state->flags.parity = !(__builtin_popcount(state->memory[state->HL]) & 1);
     state->flags.zero = (0 == state->memory[state->HL]);
 
@@ -440,10 +433,9 @@ void INR_M(cpuState *state) {
 
 // 0x35
 void DCR_M(cpuState *state) {
-    uint16_t answer = state->memory[state->HL] - 1;
-    state->memory[state->HL] = answer & 0xff;
+    state->memory[state->HL] = state->memory[state->HL] - 1;
 
-    state->flags.sign = answer >> state->memory[state->HL];
+    state->flags.sign = state->memory[state->HL] >> 7;
     state->flags.parity = !(__builtin_popcount(state->memory[state->HL]) & 1);
     state->flags.zero = (0 == state->memory[state->HL]);
 
@@ -489,9 +481,7 @@ void DCX_SP(cpuState *state) {
 
 // 0x3c
 void INR_A(cpuState *state) {
-    uint16_t answer = state->A + 1;
-
-    state->A = answer & 0xff;
+    state->A = state->A + 1;
 
     state->flags.zero = !(state->A);
     state->flags.sign = state->A >> 7;
@@ -517,7 +507,7 @@ void DCR_A(cpuState *state) {
 
 // 0x3e
 void MVI_A(cpuState *state) {
-    state->A = state->memory[state->SP + 1];
+    state->A = state->memory[state->PC + 1];
 
     state->PC += 2;
 }
@@ -1829,7 +1819,7 @@ void CMP_A(cpuState *state) {
 
 // 0xc0
 void RNZ(cpuState *state) {
-    if (state->flags.zero) {
+    if (!state->flags.zero) {
         state->PC = readShort(state->memory, state->SP - 1);
         state->SP += 2;
     } else {
