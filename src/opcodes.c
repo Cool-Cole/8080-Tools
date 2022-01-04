@@ -295,6 +295,7 @@ void LXI_HL(cpuState *state) {
 
 // 0x22
 void SHLD(cpuState *state) {
+    // Store the HL register at the place in memory pointed to by the address following the opcode
     writeShort(state->memory, readShort(state->memory, state->PC + 1), state->HL);
 
     state->PC += 3;
@@ -410,7 +411,7 @@ void LXI_SP(cpuState *state) {
 void STA(cpuState *state) {
     state->memory[readShort(state->memory, state->PC + 1)] = state->A;
 
-    state->PC += 1;
+    state->PC += 3;
 }
 
 // 0x33
@@ -1593,8 +1594,8 @@ void XRA_M(cpuState *state) {
 void XRA_A(cpuState *state) {
     state->A = state->A ^ state->A;
 
-    state->flags.sign = state->A >> 7;
-    state->flags.zero = (0 == state->A);
+    state->flags.sign = 0;
+    state->flags.zero = 0;
     state->flags.carry = 0;
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
@@ -1701,7 +1702,7 @@ void ORA_A(cpuState *state) {
 void CMP_B(cpuState *state) {
     uint16_t answer = state->A - state->B;
 
-    state->flags.carry = state->A - state->B;
+    state->flags.carry = (0xff < answer);
 
     answer = answer & 0xff;
 
@@ -2373,11 +2374,11 @@ void CPI(cpuState *state) {
 
     state->flags.carry = (0xff < answer);
 
-    uint8_t truncated = answer & 0xff;
+    answer = answer & 0xff;
 
-    state->flags.sign = truncated >> 7;
-    state->flags.zero = (0 == truncated);
-    state->flags.parity = !(__builtin_popcount(truncated) & 1);
+    state->flags.sign = answer >> 7;
+    state->flags.zero = (0 == answer);
+    state->flags.parity = !(__builtin_popcount(answer) & 1);
 
     state->PC += 2;
 }
