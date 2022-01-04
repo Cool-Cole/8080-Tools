@@ -444,7 +444,7 @@ void DCR_M(cpuState *state) {
 
 // 0x36
 void MVI_M(cpuState *state) {
-    state->HL = state->memory[state->PC + 1];
+    state->memory[state->HL] = state->memory[state->PC + 1];
 
     state->PC += 2;
 }
