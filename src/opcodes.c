@@ -21,7 +21,7 @@ static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16
     // The -1 constant is consistent with behavior from https://eliben.org/js8080/
     // Update on the -1 constant, what was I thinking???? This is causing more trouble than it is worth
     // TODO: Refactor to remove the -1 constant
-    *(uint16_t *) (mem + address - 1) = data;
+    *(uint16_t *) (mem + address) = data;
 }
 
 // 0x00
@@ -302,7 +302,7 @@ void LXI_HL(cpuState *state) {
 // 0x22
 void SHLD(cpuState *state) {
     // Store the HL register at the place in memory pointed to by the address following the opcode
-    writeShort(state->memory, readShort(state->memory, state->PC + 1) + 1, state->HL);
+    writeShort(state->memory, readShort(state->memory, state->PC + 1), state->HL);
 
     state->PC += 3;
 }
@@ -1867,7 +1867,7 @@ void CNZ(cpuState *state) {
     state->PC += 3;
 
     if (0 == state->flags.zero) {
-        writeShort(state->memory, state->SP - 2, state->PC);
+        writeShort(state->memory, state->SP - 3, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
     }
@@ -1876,7 +1876,7 @@ void CNZ(cpuState *state) {
 // 0xc5
 void PUSH_B(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP + 1, state->BC);
+    writeShort(state->memory, state->SP, state->BC);
 
     state->PC += 1;
 }
@@ -1898,7 +1898,7 @@ void ADI(cpuState *state) {
 // 0xc7
 void RST_0(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0000;
 }
 
@@ -1932,7 +1932,7 @@ void CZ(cpuState *state) {
     state->PC += 3;
 
     if (state->flags.zero) {
-        writeShort(state->memory, state->SP - 2, state->PC);
+        writeShort(state->memory, state->SP - 3, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
     }
@@ -1961,7 +1961,7 @@ void CALL(cpuState *state) {
     } else {
 
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -1983,7 +1983,7 @@ void ACI(cpuState *state) {
 // 0xcf
 void RST_1(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0008;
 }
 
@@ -2019,7 +2019,7 @@ void CNC(cpuState *state) {
     state->PC += 3;
 
     if (!state->flags.carry) {
-        writeShort(state->memory, state->SP - 2, state->PC);
+        writeShort(state->memory, state->SP - 3, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
         state->SP -= 2;
     }
@@ -2028,7 +2028,7 @@ void CNC(cpuState *state) {
 // 0xd5
 void PUSH_D(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP + 1, state->DE);
+    writeShort(state->memory, state->SP, state->DE);
 
     state->PC += 1;
 }
@@ -2051,7 +2051,7 @@ void SUI(cpuState *state) {
 // 0xd7
 void RST_2(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0010;
 }
 
@@ -2080,7 +2080,7 @@ void CC(cpuState *state) {
 
     if (state->flags.carry) {
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -2102,7 +2102,7 @@ void SBI(cpuState *state) {
 // 0xdf
 void RST_3(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0018;
 }
 
@@ -2136,7 +2136,7 @@ void JPO(cpuState *state) {
 // 0xe3
 void XTHL(cpuState *state) {
     uint16_t temp = readShort(state->memory, state->SP);
-    writeShort(state->memory, state->SP + 1, state->HL);
+    writeShort(state->memory, state->SP, state->HL);
     state->HL = temp;
 
     state->PC += 1;
@@ -2148,7 +2148,7 @@ void CPO(cpuState *state) {
 
     if (!state->flags.parity) {
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -2156,7 +2156,7 @@ void CPO(cpuState *state) {
 // 0xe5
 void PUSH_H(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP + 1, state->HL);
+    writeShort(state->memory, state->SP, state->HL);
 
     state->PC += 1;
 }
@@ -2178,7 +2178,7 @@ void ANI(cpuState *state) {
 // 0xe7
 void RST_4(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0020;
 }
 
@@ -2223,7 +2223,7 @@ void CPE(cpuState *state) {
 
     if (state->flags.parity) {
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -2245,7 +2245,7 @@ void XRI(cpuState *state) {
 // 0xef
 void RST_5(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0028;
 }
 
@@ -2290,7 +2290,7 @@ void CP(cpuState *state) {
 
     if (state->flags.parity) {
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -2310,7 +2310,7 @@ void PUSH_PSW(cpuState *state) {
     flags |= state->flags.carry;
 
     state->SP -= 2;
-    writeShort(state->memory, state->SP + 1, (state->A << 8) | flags);
+    writeShort(state->memory, state->SP, (state->A << 8) | flags);
 
     state->PC += 1;
 }
@@ -2332,7 +2332,7 @@ void ORI(cpuState *state) {
 // 0xf7
 void RST_6(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0030;
 }
 
@@ -2368,7 +2368,7 @@ void CM(cpuState *state) {
 
     if (state->flags.sign) {
         state->SP -= 2;
-        writeShort(state->memory, state->SP, state->PC);
+        writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
 }
@@ -2392,6 +2392,6 @@ void CPI(cpuState *state) {
 // 0xff
 void RST_7(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->PC);
+    writeShort(state->memory, state->SP - 1, state->PC);
     state->PC = 0x0038;
 }
