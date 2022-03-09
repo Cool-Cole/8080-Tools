@@ -89,9 +89,9 @@ void MVI_B(cpuState *state) {
 void RLC(cpuState *state) {
     state->flags.carry = state->A >> 7;
 
-    uint16_t answer = state->A << 1;
+    uint16_t answer = state->A << 1 | state->A >> 7;
 
-    state->A = (answer & 0xff) | (state->A >> 8);
+    state->A = answer & 0xff;
 
     state->PC += 1;
 }
@@ -227,7 +227,7 @@ void RAL(cpuState *state) {
 void DAD_DE(cpuState *state) {
     uint32_t answer = state->HL + state->DE;
 
-    state->DE = answer & 0xffff;
+    state->HL = answer & 0xffff;
 
     state->flags.carry = answer > 0xffff;
 
@@ -466,7 +466,7 @@ void STC(cpuState *state) {
 void DAD_SP(cpuState *state) {
     uint32_t answer = state->HL + state->SP;
 
-    state->SP = answer & 0xffff;
+    state->HL = answer & 0xffff;
 
     state->flags.carry = answer > 0xffff;
 
