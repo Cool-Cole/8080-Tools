@@ -98,7 +98,11 @@ void RLC(cpuState *state) {
 
 // 0x09
 void DAD_BC(cpuState *state) {
-    state->HL += state->BC;
+    uint32_t answer = state->HL + state->BC;
+
+    state->HL = answer & 0xffff;
+
+    state->flags.carry = answer > 0xffff;
 
     state->PC += 1;
 }
@@ -223,9 +227,9 @@ void RAL(cpuState *state) {
 void DAD_DE(cpuState *state) {
     uint32_t answer = state->HL + state->DE;
 
-    state->DE = (answer & 0xffff);
+    state->DE = answer & 0xffff;
 
-    state->flags.carry = (answer > 0xffff);
+    state->flags.carry = answer > 0xffff;
 
     state->PC += 1;
 }
@@ -344,9 +348,9 @@ void MVI_H(cpuState *state) {
 void DAD_HL(cpuState *state) {
     uint32_t answer = state->HL + state->HL;
 
-    state->flags.carry = answer > 0xffff;
-
     state->HL = answer & 0xffff;
+
+    state->flags.carry = answer > 0xffff;
 
     state->PC += 1;
 }
@@ -462,9 +466,9 @@ void STC(cpuState *state) {
 void DAD_SP(cpuState *state) {
     uint32_t answer = state->HL + state->SP;
 
-    state->flags.carry = (answer > 0xffff);
-
     state->SP = answer & 0xffff;
+
+    state->flags.carry = answer > 0xffff;
 
     state->PC += 1;
 }
