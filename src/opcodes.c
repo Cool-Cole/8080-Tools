@@ -1594,8 +1594,8 @@ void XRA_M(cpuState *state) {
 void XRA_A(cpuState *state) {
     state->A = state->A ^ state->A;
 
-    state->flags.sign = 0;
-    state->flags.zero = 0;
+    state->flags.sign = state->A >> 7;
+    state->flags.zero = (0 == state->A);
     state->flags.carry = 0;
     state->flags.parity = !(__builtin_popcount(state->A) & 1);
 
