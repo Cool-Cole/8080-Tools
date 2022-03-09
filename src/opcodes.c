@@ -1876,7 +1876,7 @@ void CNZ(cpuState *state) {
 // 0xc5
 void PUSH_B(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->BC);
+    writeShort(state->memory, state->SP + 1, state->BC);
 
     state->PC += 1;
 }
@@ -2028,7 +2028,7 @@ void CNC(cpuState *state) {
 // 0xd5
 void PUSH_D(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->DE);
+    writeShort(state->memory, state->SP + 1, state->DE);
 
     state->PC += 1;
 }
@@ -2135,7 +2135,7 @@ void JPO(cpuState *state) {
 
 // 0xe3
 void XTHL(cpuState *state) {
-    uint16_t temp = readShort(state->memory, state->SP + 1);
+    uint16_t temp = readShort(state->memory, state->SP);
     writeShort(state->memory, state->SP + 1, state->HL);
     state->HL = temp;
 
@@ -2156,7 +2156,7 @@ void CPO(cpuState *state) {
 // 0xe5
 void PUSH_H(cpuState *state) {
     state->SP -= 2;
-    writeShort(state->memory, state->SP, state->BC);
+    writeShort(state->memory, state->SP + 1, state->HL);
 
     state->PC += 1;
 }
@@ -2196,7 +2196,7 @@ void RPE(cpuState *state) {
 void PCHL(cpuState *state) {
     state->PC = state->HL;
 
-    state->PC += 1;
+    //state->PC += 1;
 }
 
 // 0xea
@@ -2303,14 +2303,14 @@ void PUSH_PSW(cpuState *state) {
      */
     uint8_t flags = 0;
     flags |= state->flags.sign << 7;
-    flags |= state->flags.zero << 6 & 0x40;
-    flags |= state->flags.auxCarry << 4 & 0x10;
-    flags |= state->flags.parity << 2 & 0x04;
+    flags |= (state->flags.zero << 6) & 0x40;
+    flags |= (state->flags.auxCarry << 4) & 0x10;
+    flags |= (state->flags.parity << 2) & 0x04;
     flags |= 0x02;
     flags |= state->flags.carry;
 
     state->SP -= 2;
-    writeShort(state->memory, state->SP, (state->A << 8) | flags);
+    writeShort(state->memory, state->SP + 1, (state->A << 8) | flags);
 
     state->PC += 1;
 }
