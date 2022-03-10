@@ -4,9 +4,6 @@
 
 #include "opcodes.h"
 
-#include <stdlib.h>
-
-
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
