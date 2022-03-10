@@ -1849,10 +1849,12 @@ void JNZ(cpuState *state) {
 // 0xc3
 void JMP(cpuState *state) {
 
+    /*
     if (0x0000 == readShort(state->memory, state->PC + 1)) {
-        //printf("\nWBOOT addressed jumped to,\nQuitting...");
+        printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
+     */
 
     state->PC = readShort(state->memory, state->PC + 1);
 }
@@ -1938,6 +1940,11 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
+    state->SP -= 2;
+    writeShort(state->memory, state->SP - 1, state->PC);
+    state->PC = readShort(state->memory, state->PC - 2);
+
+    /*
     // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
@@ -1949,7 +1956,7 @@ void CALL(cpuState *state) {
         } else if (state->C == 2) {
 
             printf("%c", state->E);
-            //printf("print char routine called\n");
+            printf("print char routine called\n");
         }
     } else if (0 == readShort(state->memory, state->PC - 2)) {
         exit(0);
@@ -1959,6 +1966,7 @@ void CALL(cpuState *state) {
         writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
+     */
 }
 
 // 0xce
