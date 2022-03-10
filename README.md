@@ -10,11 +10,10 @@ Any feedback is welcome and constructive criticism is encouraged!
 
 ## TODO
 
-- Implement all opcodes (excluding special instructions that need to be handled at a higher level)
-- Run the emulator against testing roms
-- Merge opcodes.* and handleState.*
-- Inline opcode functions
-- Time Travel Debugging
+- [x] Implement all opcodes (excluding special instructions that need to be handled at a higher level)
+- [x] Run the emulator against a testing rom
+- [ ] Run the emulator aginst multiple testing roms
+- [ ] Time Travel Debugging
 
 ## Sources
 
