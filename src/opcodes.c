@@ -4,12 +4,7 @@
 
 #include "opcodes.h"
 
-#include <stdlib.h>
-
-
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
-// QUESTION: Is this Little Endian dependant?
-// WARNING: potential read error if PC is at uint16_MAX
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
@@ -18,9 +13,6 @@ static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
 
 static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
-    // The -1 constant is consistent with behavior from https://eliben.org/js8080/
-    // Update on the -1 constant, what was I thinking???? This is causing more trouble than it is worth
-    // TODO: Refactor to remove the -1 constant
     *(uint16_t *) (mem + address) = data;
 }
 
@@ -1854,10 +1846,12 @@ void JNZ(cpuState *state) {
 // 0xc3
 void JMP(cpuState *state) {
 
+    /*
     if (0x0000 == readShort(state->memory, state->PC + 1)) {
         printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
+     */
 
     state->PC = readShort(state->memory, state->PC + 1);
 }
@@ -1943,6 +1937,11 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
+    state->SP -= 2;
+    writeShort(state->memory, state->SP - 1, state->PC);
+    state->PC = readShort(state->memory, state->PC - 2);
+
+    /*
     // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
@@ -1954,7 +1953,7 @@ void CALL(cpuState *state) {
         } else if (state->C == 2) {
 
             printf("%c", state->E);
-            //printf("print char routine called\n");
+            printf("print char routine called\n");
         }
     } else if (0 == readShort(state->memory, state->PC - 2)) {
         exit(0);
@@ -1964,6 +1963,7 @@ void CALL(cpuState *state) {
         writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
+     */
 }
 
 // 0xce

@@ -2,6 +2,8 @@
 // Created by Cole on 11/22/2021.
 //
 
+#include <stdio.h>
+
 #include "handleState.h"
 #include "opcodes.h"
 
@@ -11,36 +13,30 @@ struct cpuState initState(void) {
     // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
+    // Was originally sizeof(uint8_t) but address-sanitize complained
+    // TODO: look into why it was complaining
     state.memory = calloc(UINT16_MAX, sizeof(uint16_t));
 
     if (NULL == state.memory) {
+        //TODO: Find a way to notify caller if this function fails
+        // EX: The equivalent of returning null
         exit(EXIT_FAILURE);
     }
 
-    cpuStateSnapshot* stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
+    cpuStateSnapshot *stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
 
     if (NULL == stateSnapshot) {
-        puts("Calloc fail in takeStateSnapshot! Exiting...");
+        //TODO: Find a way to notify caller if this function fails
+        // EX: The equivalent of returning null
         exit(EXIT_FAILURE);
     }
 
-    //state.stateSnapshot =
+    state.stateSnapshot = stateSnapshot;
 
     return state;
 }
 
-int takeStateSnapshot(struct cpuState *state){
-    cpuStateSnapshot* stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
-
-    if (NULL == stateSnapshot) {
-        puts("Calloc fail in takeStateSnapshot! Exiting...");
-        exit(EXIT_FAILURE);
-    }
-
-
-}
-
-int dumpState(struct cpuState* state, char *filename){
+int dumpState(struct cpuState *state, char *filename) {
     FILE *wfp;
 
     wfp = fopen(filename, "wb");
@@ -56,24 +52,7 @@ int dumpState(struct cpuState* state, char *filename){
 }
 
 int emulateState(struct cpuState *state) {
-    //0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
-    /*uint8_t op_bytes[] = {1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, // 0
-                          1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, // 1
-                          1, 3, 3, 1, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 2, 1, // 2
-                          1, 3, 3, 1, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 2, 1, // 3
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 4
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 5
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 6
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 7
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 8
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 9
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // A
-                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // B
-                          1, 1, 3, 3, 3, 1, 2, 1, 1, 1, 3, 1, 3, 3, 2, 1, // C
-                          1, 1, 3, 2, 3, 1, 2, 1, 1, 1, 3, 2, 3, 1, 2, 1, // D
-                          1, 1, 3, 1, 3, 1, 2, 1, 1, 1, 3, 1, 3, 1, 2, 1, // E
-                          1, 1, 3, 1, 3, 1, 2, 1, 1, 1, 3, 1, 3, 1, 2, 1};// F
-*/
+
     uint8_t *currentOpcode = &state->memory[state->PC];
 
     switch (*currentOpcode) {

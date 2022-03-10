@@ -12,6 +12,12 @@ int main(void) {
 
     cpuState state = initState();
 
+    //uint8_t mem[] = {0x31,0x04,0x00,0x01,0xBB,0xAA,0x21,0xDD,0xCC,0xC5,0xE5};
+
+    //memcpy(state.memory, mem, 11);
+
+
+
     // PATH definition is the cwd as found by cmake
     // TODO: Check to make sure this is OS independent, I think it is.
     loadROM(&state, PATH "/testing_roms/cpudiag.bin", 0x0100);
@@ -31,6 +37,8 @@ int main(void) {
     state.memory[0x59c] = 0xc3;//JMP
     state.memory[0x59d] = 0xc2;
     state.memory[0x59e] = 0x05;
+
+    //dumpState(&state, "TestFileRom");
 
     while (1) {
         emulateState(&state);
