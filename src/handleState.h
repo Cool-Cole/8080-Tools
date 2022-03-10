@@ -91,14 +91,13 @@ typedef struct cpuStateSnapshot {
     uint16_t shortWritten;
 
     // TODO: An underscore followed by a capital letter is reserved, what about a lower case letter?
-    struct cpuState* _nextState;
-    struct cpuState* _previousState;
+    //struct cpuState* _nextSnapshot;
+    struct cpuState* _previousSnapshot;
 
 } cpuStateSnapshot;
 
 struct cpuState initState(void);
 int emulateState(struct cpuState *state);
-int takeStateSnapshot(struct cpuState *state);
 int dumpState(struct cpuState* state, char *filename);
 
 #endif//INC_8080EMU_HANDLESTATE_H
