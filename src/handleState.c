@@ -15,7 +15,7 @@ struct cpuState initState(void) {
 
     // Was originally sizeof(uint8_t) but address-sanitize complained
     // TODO: look into why it was complaining
-    state.memory = calloc(UINT16_MAX, sizeof(uint16_t));
+    state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
 
     if (NULL == state.memory) {
         //TODO: Find a way to notify caller if this function fails
