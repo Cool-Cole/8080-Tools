@@ -13,7 +13,9 @@ struct cpuState initState(void) {
     // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
-    state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
+    // Was originally sizeof(uint8_t) but address-sanitize complained
+    // TODO: look into why it was complaining
+    state.memory = calloc(UINT16_MAX, sizeof(uint16_t));
 
     if (NULL == state.memory) {
         //TODO: Find a way to notify caller if this function fails

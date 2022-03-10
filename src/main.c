@@ -38,9 +38,7 @@ int main(void) {
     state.memory[0x59d] = 0xc2;
     state.memory[0x59e] = 0x05;
 
-    dumpState(&state, "TestFileRom");
-
-    exit(1);
+    //dumpState(&state, "TestFileRom");
 
     while (1) {
         emulateState(&state);
