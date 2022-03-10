@@ -17,11 +17,45 @@ struct cpuState initState(void) {
         exit(EXIT_FAILURE);
     }
 
+    cpuStateSnapshot* stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
+
+    if (NULL == stateSnapshot) {
+        puts("Calloc fail in takeStateSnapshot! Exiting...");
+        exit(EXIT_FAILURE);
+    }
+
+    //state.stateSnapshot =
+
     return state;
 }
 
+int takeStateSnapshot(struct cpuState *state){
+    cpuStateSnapshot* stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
 
-int emulateState(cpuState *state) {
+    if (NULL == stateSnapshot) {
+        puts("Calloc fail in takeStateSnapshot! Exiting...");
+        exit(EXIT_FAILURE);
+    }
+
+
+}
+
+int dumpState(struct cpuState* state, char *filename){
+    FILE *wfp;
+
+    wfp = fopen(filename, "wb");
+
+    if (NULL == wfp) {
+        printf("ERROR: Could not open %s\nQuitting...\n", filename);
+        return -1;
+    }
+
+    fwrite(state->memory, 65536, 1, wfp);
+
+    return 0;
+}
+
+int emulateState(struct cpuState *state) {
     //0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
     /*uint8_t op_bytes[] = {1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, // 0
                           1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, // 1
