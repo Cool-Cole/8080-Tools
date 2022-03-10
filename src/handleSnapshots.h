@@ -6,6 +6,7 @@
 #define INC_8080EMU_HANDLESNAPSHOTS_H
 
 #include <stdlib.h>
+
 #include "handleState.h"
 
 int takeStateSnapshot(struct cpuState *state);

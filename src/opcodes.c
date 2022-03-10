@@ -1850,7 +1850,7 @@ void JNZ(cpuState *state) {
 void JMP(cpuState *state) {
 
     if (0x0000 == readShort(state->memory, state->PC + 1)) {
-        printf("\nWBOOT addressed jumped to,\nQuitting...");
+        //printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
 

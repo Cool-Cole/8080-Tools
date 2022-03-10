@@ -46,9 +46,9 @@ typedef struct cpuState {
 
     struct cpuFlags flags;
 
-    uint8_t* memory;
+    uint8_t *memory;
 
-    struct cpuStateSnapshot* stateSnapshot;
+    struct cpuStateSnapshot *stateSnapshot;
 
 } cpuState;
 
@@ -92,12 +92,12 @@ typedef struct cpuStateSnapshot {
 
     // TODO: An underscore followed by a capital letter is reserved, what about a lower case letter?
     //struct cpuState* _nextSnapshot;
-    struct cpuState* _previousSnapshot;
+    struct cpuState *_previousSnapshot;
 
 } cpuStateSnapshot;
 
 struct cpuState initState(void);
 int emulateState(struct cpuState *state);
-int dumpState(struct cpuState* state, char *filename);
+int dumpState(struct cpuState *state, char *filename);
 
 #endif//INC_8080EMU_HANDLESTATE_H

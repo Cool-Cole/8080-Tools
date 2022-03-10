@@ -4,8 +4,8 @@
 
 #include "handleSnapshots.h"
 
-int takeStateSnapshot(struct cpuState *state){
-    cpuStateSnapshot* currentSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
+int takeStateSnapshot(struct cpuState *state) {
+    cpuStateSnapshot *currentSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
 
     if (NULL == currentSnapshot) {
         return -1;
@@ -17,10 +17,8 @@ int takeStateSnapshot(struct cpuState *state){
     state->stateSnapshot = currentSnapshot;
 
 
-
     return 1;
 }
 
-int restorePreviousState(){
-
+int restorePreviousState() {
 }
