@@ -11,7 +11,7 @@ struct cpuState initState(void) {
     // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
-    state.memory = calloc(UINT16_MAX, sizeof(uint8_t));
+    state.memory = calloc(UINT16_MAX, sizeof(uint16_t));
 
     if (NULL == state.memory) {
         exit(EXIT_FAILURE);
