@@ -8,8 +8,6 @@
 
 
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
-// QUESTION: Is this Little Endian dependant?
-// WARNING: potential read error if PC is at uint16_MAX
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
@@ -18,9 +16,6 @@ static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
 
 static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
     // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
-    // The -1 constant is consistent with behavior from https://eliben.org/js8080/
-    // Update on the -1 constant, what was I thinking???? This is causing more trouble than it is worth
-    // TODO: Refactor to remove the -1 constant
     *(uint16_t *) (mem + address) = data;
 }
 

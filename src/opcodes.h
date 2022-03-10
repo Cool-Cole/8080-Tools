@@ -5,13 +5,10 @@
 #ifndef INC_8080EMU_OPCODES_H
 #define INC_8080EMU_OPCODES_H
 
-#include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "handleState.h"
-
-void unimplementedOpcode(cpuState *state);
 
 // 0x00
 void NOP(cpuState *state);
