@@ -38,8 +38,6 @@ int main(void) {
     state.memory[0x59d] = 0xc2;
     state.memory[0x59e] = 0x05;
 
-    state.memory[0xffff] = 0x69;
-
     dumpState(&state, "TestFileRom");
 
     exit(1);
