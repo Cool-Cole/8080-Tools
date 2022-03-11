@@ -4,11 +4,36 @@
 #include <stdint.h>
 
 typedef struct cpuFlags {
+
+    // TODO: look into using bit fields and a union to uint8_t
+    // Pros: will make Pop/Push_PSW look nicer, will save space
+    // Cons: possibly slower
+
+    // https://retrocomputing.stackexchange.com/questions/12300/bit-one-of-the-intel-8080s-flags-register
+
+    /*
+union {
+    uint8_t flags;
+    struct {
+        uint8_t sign : 1;
+        uint8_t zero : 1;
+        uint8_t _alwaysZero1 : 1;
+        uint8_t auxCarry : 1;
+        uint8_t _alwaysZero2 : 1;
+        uint8_t parity : 1;
+        uint8_t _alwaysOne : 1;
+        uint8_t carry : 1;
+    };
+};
+     */
+
+
     uint8_t sign;
     uint8_t zero;
     uint8_t auxCarry;
     uint8_t parity;
     uint8_t carry;
+
 } cpuFlags;
 
 typedef struct cpuState {
