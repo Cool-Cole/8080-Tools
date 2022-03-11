@@ -8,6 +8,25 @@ Invaders.
 
 Any feedback is welcome and constructive criticism is encouraged!
 
+## Compiling
+
+Compiling normally
+
+1. `cmake CMakeLists.txt`
+
+Compiling with Address Sanitizer
+
+1. Set the options flags in CMakeLists.txt to ON
+2. `cmake CMakeLists.txt`
+3. `make`
+
+(Note: I don't know how to use CMake properly so if you try to switch between compiling a normal build and a cmake 
+build you need to delete the `CMakeCache.txt` file)
+
+## Running
+
+`./8080emu romNamehere`
+
 ## TODO
 
 - [x] Implement all opcodes (excluding special instructions that need to be handled at a higher level)
