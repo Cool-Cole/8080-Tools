@@ -13,6 +13,8 @@ struct cpuState initState(void) {
     // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
+    state.flags.flagByte = 0x02;
+
     // Was originally sizeof(uint8_t) but address-sanitize complained
     // TODO: look into why it was complaining
     state.memory = calloc(UINT16_MAX, sizeof(uint16_t));

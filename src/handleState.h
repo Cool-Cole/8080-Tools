@@ -11,28 +11,27 @@ typedef struct cpuFlags {
 
     // https://retrocomputing.stackexchange.com/questions/12300/bit-one-of-the-intel-8080s-flags-register
 
-    /*
-union {
-    uint8_t flags;
-    struct {
-        uint8_t sign : 1;
-        uint8_t zero : 1;
-        uint8_t _alwaysZero1 : 1;
-        uint8_t auxCarry : 1;
-        uint8_t _alwaysZero2 : 1;
-        uint8_t parity : 1;
-        uint8_t _alwaysOne : 1;
-        uint8_t carry : 1;
+    union {
+        uint8_t flagByte;
+        struct {
+            uint8_t sign : 1;
+            uint8_t zero : 1;
+            uint8_t _alwaysZero1 : 1;
+            uint8_t auxCarry : 1;
+            uint8_t _alwaysZero2 : 1;
+            uint8_t parity : 1;
+            uint8_t _alwaysOne : 1;
+            uint8_t carry : 1;
+        };
     };
-};
-     */
 
-
+/*
     uint8_t sign;
     uint8_t zero;
     uint8_t auxCarry;
     uint8_t parity;
     uint8_t carry;
+*/
 
 } cpuFlags;
 
@@ -69,6 +68,7 @@ typedef struct cpuState {
     uint16_t SP;
     uint16_t PC;
 
+    // TODO: change name to stateFlags
     struct cpuFlags flags;
 
     uint8_t *memory;
@@ -116,8 +116,8 @@ typedef struct cpuStateSnapshot {
     uint16_t shortWritten;
 
     // TODO: An underscore followed by a capital letter is reserved, what about a lower case letter?
-    //struct cpuState* _nextSnapshot;
-    struct cpuState *_previousSnapshot;
+    //struct cpuStateSnapshot *_nextSnapshot;
+    struct cpuStateSnapshot *_previousSnapshot;
 
 } cpuStateSnapshot;
 
