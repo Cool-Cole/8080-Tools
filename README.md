@@ -15,18 +15,20 @@ Compiling normally
 1. `cmake CMakeLists.txt`
 2. `make`
 
-Compiling with Address Sanitizer
+Compiling with Address Sanitizer (probably won't work on Windows)
 
 1. Set the `BUILD_ASAN` and `BUILD_DEBUG` options flags in `CMakeLists.txt` to `ON`
 2. `cmake CMakeLists.txt`
 3. `make`
 
-(Note: I don't know how to use CMake properly so if you try to switch between compiling a normal build and a cmake 
+(Note: I don't know how to use CMake properly so if you try to switch between compiling a normal build and an ASAN 
 build you need to delete the `CMakeCache.txt` file)
 
 ## Running
 
-`./8080emu romNamehere`
+No way to config input rom yet! Sorry!
+
+`./8080emu`
 
 ## TODO
 
