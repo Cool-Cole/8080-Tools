@@ -13,10 +13,11 @@ Any feedback is welcome and constructive criticism is encouraged!
 Compiling normally
 
 1. `cmake CMakeLists.txt`
+2. `make`
 
 Compiling with Address Sanitizer
 
-1. Set the options flags in CMakeLists.txt to ON
+1. Set the `BUILD_ASAN` and `BUILD_DEBUG` options flags in `CMakeLists.txt` to `ON`
 2. `cmake CMakeLists.txt`
 3. `make`
 
