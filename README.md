@@ -13,6 +13,7 @@ Any feedback is welcome and constructive criticism is encouraged!
 - [x] Implement all opcodes (excluding special instructions that need to be handled at a higher level)
 - [x] Run the emulator against a testing rom
 - [ ] Run the emulator aginst multiple testing roms
+- [ ] Implement a GDB like debugging interface
 - [ ] Time Travel Debugging
 
 ## Sources
