@@ -15,7 +15,7 @@ Compiling normally
 1. `cmake CMakeLists.txt`
 2. `make`
 
-Compiling with Address Sanitizer
+Compiling with Address Sanitizer (probably won't work on Windows)
 
 1. Set the `BUILD_ASAN` and `BUILD_DEBUG` options flags in `CMakeLists.txt` to `ON`
 2. `cmake CMakeLists.txt`
