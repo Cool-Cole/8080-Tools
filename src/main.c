@@ -42,6 +42,10 @@ int main(void) {
 
     while (1) {
         emulateState(&state);
+
+        // Don't loop around when done executing the rom
+        if(UINT16_MAX == state.PC)
+            break;
     }
 
     //return EXIT_SUCCESS;

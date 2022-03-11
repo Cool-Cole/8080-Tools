@@ -4,6 +4,8 @@
 
 #include "opcodes.h"
 
+#include <stdio.h>
+
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
 
 static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
@@ -1846,12 +1848,12 @@ void JNZ(cpuState *state) {
 // 0xc3
 void JMP(cpuState *state) {
 
-    /*
+
     if (0x0000 == readShort(state->memory, state->PC + 1)) {
         printf("\nWBOOT addressed jumped to,\nQuitting...");
         exit(EXIT_FAILURE);
     }
-     */
+
 
     state->PC = readShort(state->memory, state->PC + 1);
 }
@@ -1937,11 +1939,11 @@ void CALL(cpuState *state) {
 
     state->PC += 3;
 
-    state->SP -= 2;
-    writeShort(state->memory, state->SP - 1, state->PC);
-    state->PC = readShort(state->memory, state->PC - 2);
+    //state->SP -= 2;
+    //writeShort(state->memory, state->SP - 1, state->PC);
+    //state->PC = readShort(state->memory, state->PC - 2);
 
-    /*
+
     // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
@@ -1963,7 +1965,7 @@ void CALL(cpuState *state) {
         writeShort(state->memory, state->SP - 1, state->PC);
         state->PC = readShort(state->memory, state->PC - 2);
     }
-     */
+
 }
 
 // 0xce
@@ -2266,11 +2268,7 @@ void POP_PSW(cpuState *state) {
 
     state->A = answer >> 8 & 0xff;
 
-    state->flags.sign = answer >> 7 & 0x01;
-    state->flags.zero = answer >> 6 & 0x01;
-    state->flags.auxCarry = answer >> 4 & 0x01;
-    state->flags.parity = answer >> 2 & 0x01;
-    state->flags.carry = answer & 0x01;
+    state->flags.flagByte = answer & 0xff;
 
     state->PC += 1;
 }
@@ -2297,20 +2295,9 @@ void CP(cpuState *state) {
 
 // 0xf5
 void PUSH_PSW(cpuState *state) {
-    /* Compose the flags into a byte
-     * https://4.bp.blogspot.com/-DUvtMKk7_Yw/UF3rmXT5XvI/AAAAAAAAAJU/O5HZMuZjtO4/s1600/FLAG+8085.jpg
-     * https://retrocomputing.stackexchange.com/questions/12300/bit-one-of-the-intel-8080s-flags-register
-     */
-    uint8_t flags = 0;
-    flags |= state->flags.sign << 7;
-    flags |= (state->flags.zero << 6) & 0x40;
-    flags |= (state->flags.auxCarry << 4) & 0x10;
-    flags |= (state->flags.parity << 2) & 0x04;
-    flags |= 0x02;
-    flags |= state->flags.carry;
 
     state->SP -= 2;
-    writeShort(state->memory, state->SP, (state->A << 8) | flags);
+    writeShort(state->memory, state->SP, (state->A << 8) | state->flags.flagByte);
 
     state->PC += 1;
 }

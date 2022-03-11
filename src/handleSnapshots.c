@@ -11,14 +11,39 @@ int takeStateSnapshot(struct cpuState *state) {
         return -1;
     }
 
+    currentSnapshot->HL = state->HL;
+    currentSnapshot->DE = state->DE;
+    currentSnapshot->BC = state->BC;
+    currentSnapshot->A = state->A;
+    currentSnapshot->SP = state->SP;
+    currentSnapshot->PC = state->PC;
+    currentSnapshot->flags = state->flags;
+
+    /*for(uint16_t i = 0; i <= UINT16_MAX; i++){
+        if(state->memory[i] != ){
+            //TODO: Figure out some way to track memory changes
+        }
+    }*/
+
     // Basically think of this as a sort of linked list que
     // This pushes a snapshot onto the que and sends previous snapshots back
     currentSnapshot->_previousSnapshot = state->stateSnapshot;
     state->stateSnapshot = currentSnapshot;
 
-
     return 1;
 }
 
-int restorePreviousState() {
+int restorePreviousState(struct cpuState *state) {
+
+    if(NULL == state->stateSnapshot){
+        return -1;
+    }
+
+    if (NULL == state->stateSnapshot->_previousSnapshot){
+        return -1;
+    }
+
+
+
+    return 1;
 }
