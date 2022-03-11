@@ -3,7 +3,7 @@ project(8080EMU C)
 
 set(CMAKE_C_STANDARD 11)
 
-option(BUILD_ASAN "Build with -fsanitize=address" ON)
+option(BUILD_ASAN "Build with -fsanitize=address" OFF)
 option(BUILD_DEBUG "Build with debug symbols" ON)
 option(BUILD_FAST "Build with -O3" ON)
 
