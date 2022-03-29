@@ -92,7 +92,7 @@ void RLC(cpuState *state) {
 
 // 0x09
 void DAD_BC(cpuState *state) {
-    uint32_t answer = state->HL + state->BC;
+    u32 answer = state->HL + state->BC;
 
     state->HL = answer & 0xffff;
 
@@ -219,7 +219,7 @@ void RAL(cpuState *state) {
 }
 
 void DAD_DE(cpuState *state) {
-    uint32_t answer = state->HL + state->DE;
+    u32 answer = state->HL + state->DE;
 
     state->HL = answer & 0xffff;
 
@@ -340,7 +340,7 @@ void MVI_H(cpuState *state) {
 
 // 0x29
 void DAD_HL(cpuState *state) {
-    uint32_t answer = state->HL + state->HL;
+    u32 answer = state->HL + state->HL;
 
     state->HL = answer & 0xffff;
 
@@ -458,7 +458,7 @@ void STC(cpuState *state) {
 }
 
 void DAD_SP(cpuState *state) {
-    uint32_t answer = state->HL + state->SP;
+    u32 answer = state->HL + state->SP;
 
     state->HL = answer & 0xffff;
 
