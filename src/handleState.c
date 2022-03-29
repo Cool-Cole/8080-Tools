@@ -25,16 +25,6 @@ struct cpuState initState(void) {
         exit(EXIT_FAILURE);
     }
 
-    cpuStateSnapshot *stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
-
-    if (NULL == stateSnapshot) {
-        //TODO: Find a way to notify caller if this function fails
-        // EX: The equivalent of returning null
-        exit(EXIT_FAILURE);
-    }
-
-    state.stateSnapshot = stateSnapshot;
-
     return state;
 }
 
