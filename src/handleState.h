@@ -1,36 +1,36 @@
 #ifndef INC_8080EMU_HANDLESTATE_H
 #define INC_8080EMU_HANDLESTATE_H
 
-#include <stdint.h>
+#include "intDefs.h"
 
 typedef struct cpuFlags {
 
-    // TODO: look into using bit fields and a union to uint8_t
+    // TODO: look into using bit fields and a union to u8
     // Pros: will make Pop/Push_PSW look nicer, will save space
     // Cons: possibly slower
 
     // https://retrocomputing.stackexchange.com/questions/12300/bit-one-of-the-intel-8080s-flags-register
 
     union {
-        uint8_t flagByte;
+        u8 flagByte;
         struct {
-            uint8_t sign : 1;
-            uint8_t zero : 1;
-            uint8_t _alwaysZero1 : 1;
-            uint8_t auxCarry : 1;
-            uint8_t _alwaysZero2 : 1;
-            uint8_t parity : 1;
-            uint8_t _alwaysOne : 1;
-            uint8_t carry : 1;
+            u8 sign : 1;
+            u8 zero : 1;
+            u8 _alwaysZero1 : 1;
+            u8 auxCarry : 1;
+            u8 _alwaysZero2 : 1;
+            u8 parity : 1;
+            u8 _alwaysOne : 1;
+            u8 carry : 1;
         };
     };
 
 /*
-    uint8_t sign;
-    uint8_t zero;
-    uint8_t auxCarry;
-    uint8_t parity;
-    uint8_t carry;
+    u8 sign;
+    u8 zero;
+    u8 auxCarry;
+    u8 parity;
+    u8 carry;
 */
 
 } cpuFlags;
@@ -41,39 +41,39 @@ typedef struct cpuState {
 
     // HL register
     union {
-        uint16_t HL;
+        u16 HL;
         struct {
-            uint8_t L, H;
+            u8 L, H;
         };
     };
 
     // DE register
     union {
-        uint16_t DE;
+        u16 DE;
         struct {
-            uint8_t E, D;
+            u8 E, D;
         };
     };
 
     // BC register
     union {
-        uint16_t BC;
+        u16 BC;
         struct {
-            uint8_t C, B;
+            u8 C, B;
         };
     };
 
-    uint8_t A;
+    u8 A;
 
-    uint16_t SP;
-    uint16_t PC;
+    u16 SP;
+    u16 PC;
 
     // TODO: change name to stateFlags
     struct cpuFlags flags;
 
-    uint8_t *memory;
+    u8 *memory;
 
-    struct cpuStateSnapshot *stateSnapshot;
+    u64 totalInstructionCounter;
 
 } cpuState;
 

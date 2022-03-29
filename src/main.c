@@ -1,9 +1,7 @@
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <unistd.h>
-
+#include "intDefs.h"
 #include "handleState.h"
 
 void loadROM(cpuState *state, const char *filePath, const uint16_t memOffset);
