@@ -8,14 +8,14 @@
 
 // TODO: Get an actual C programmers opinion on the two read/write functions below.
 
-static inline uint16_t readShort(const uint8_t *mem, const uint16_t address) {
-    // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to read the value
-    return *(uint16_t *) (mem + address);
+static inline u16 readShort(const u8 *mem, const u16 address) {
+    // Do the pointer addition while mem is of type u8* then cast mem to type u16* in order to read the value
+    return *(u16 *) (mem + address);
 }
 
-static inline void writeShort(uint8_t *mem, const uint16_t address, const uint16_t data) {
-    // Do the pointer addition while mem is of type uint8_t* then cast mem to type uint16_t* in order to write the value
-    *(uint16_t *) (mem + address) = data;
+static inline void writeShort(u8 *mem, const u16 address, const u16 data) {
+    // Do the pointer addition while mem is of type u8* then cast mem to type u16* in order to write the value
+    *(u16 *) (mem + address) = data;
 }
 
 // 0x00
@@ -62,7 +62,7 @@ void INR_B(cpuState *state) {
 
 // 0x05
 void DCR_B(cpuState *state) {
-    uint16_t answer = state->B - 1;
+    u16 answer = state->B - 1;
     state->B = answer & 0xff;
 
     state->flags.sign = state->B >> 7;
@@ -83,7 +83,7 @@ void MVI_B(cpuState *state) {
 void RLC(cpuState *state) {
     state->flags.carry = state->A >> 7;
 
-    uint16_t answer = state->A << 1 | state->A >> 7;
+    u16 answer = state->A << 1 | state->A >> 7;
 
     state->A = answer & 0xff;
 
@@ -128,7 +128,7 @@ void INR_C(cpuState *state) {
 
 // 0x0d
 void DCR_C(cpuState *state) {
-    uint16_t answer = state->C - 1;
+    u16 answer = state->C - 1;
     state->C = answer & 0xff;
 
     state->flags.sign = state->C >> 7;
@@ -149,7 +149,7 @@ void MVI_C(cpuState *state) {
 void RRC(cpuState *state) {
     state->flags.carry = state->A & 1;
 
-    uint16_t answer = state->A >> 1;
+    u16 answer = state->A >> 1;
 
     state->A = answer | (state->A << 7);
 
@@ -190,7 +190,7 @@ void INR_D(cpuState *state) {
 
 // 0x15
 void DCR_D(cpuState *state) {
-    uint16_t answer = state->D - 1;
+    u16 answer = state->D - 1;
     state->D = answer & 0xff;
 
     state->flags.sign = state->D >> 7;
@@ -209,7 +209,7 @@ void MVI_D(cpuState *state) {
 
 // 0x17
 void RAL(cpuState *state) {
-    uint16_t answer = state->A << 1;
+    u16 answer = state->A << 1;
 
     state->A = (answer & 0xff) | state->flags.carry;
 
@@ -255,7 +255,7 @@ void INR_E(cpuState *state) {
 
 // 0x1d
 void DCR_E(cpuState *state) {
-    uint16_t answer = state->E - 1;
+    u16 answer = state->E - 1;
     state->E = answer & 0xff;
 
     state->flags.sign = state->E >> 7;
@@ -275,7 +275,7 @@ void MVI_E(cpuState *state) {
 // https://github.com/kpmiller/emulator101/issues/23
 // 0x1f
 void RAR(cpuState *state) {
-    uint8_t answer = state->A >> 1;
+    u8 answer = state->A >> 1;
 
     answer = answer | (state->flags.carry << 7);
 
@@ -321,7 +321,7 @@ void INR_H(cpuState *state) {
 
 // 0x25
 void DCR_H(cpuState *state) {
-    uint16_t answer = state->H - 1;
+    u16 answer = state->H - 1;
     state->H = answer & 0xff;
 
     state->flags.sign = state->H >> 7;
@@ -376,7 +376,7 @@ void INR_L(cpuState *state) {
 
 // 0x2d
 void DCR_L(cpuState *state) {
-    uint16_t answer = state->L - 1;
+    u16 answer = state->L - 1;
     state->L = answer & 0xff;
 
     state->flags.sign = state->L >> 7;
@@ -495,7 +495,7 @@ void INR_A(cpuState *state) {
 void DCR_A(cpuState *state) {
     // TODO: Implement AuxCarry
 
-    uint16_t answer = state->A - 1;
+    u16 answer = state->A - 1;
 
     state->A = answer & 0xff;
 
@@ -963,7 +963,7 @@ void MOV_A_A(cpuState *state) {
 
 // 0x80
 void ADD_B(cpuState *state) {
-    uint16_t answer = state->A + state->B;
+    u16 answer = state->A + state->B;
 
     state->A = answer & 0xff;
 
@@ -977,7 +977,7 @@ void ADD_B(cpuState *state) {
 
 // 0x81
 void ADD_C(cpuState *state) {
-    uint16_t answer = state->A + state->C;
+    u16 answer = state->A + state->C;
 
     state->A = answer & 0xff;
 
@@ -991,7 +991,7 @@ void ADD_C(cpuState *state) {
 
 // 0x82
 void ADD_D(cpuState *state) {
-    uint16_t answer = state->A + state->D;
+    u16 answer = state->A + state->D;
 
     state->A = answer & 0xff;
 
@@ -1005,7 +1005,7 @@ void ADD_D(cpuState *state) {
 
 // 0x83
 void ADD_E(cpuState *state) {
-    uint16_t answer = state->A + state->E;
+    u16 answer = state->A + state->E;
 
     state->A = answer & 0xff;
 
@@ -1019,7 +1019,7 @@ void ADD_E(cpuState *state) {
 
 // 0x84
 void ADD_H(cpuState *state) {
-    uint16_t answer = state->A + state->H;
+    u16 answer = state->A + state->H;
 
     state->A = answer & 0xff;
 
@@ -1033,7 +1033,7 @@ void ADD_H(cpuState *state) {
 
 // 0x85
 void ADD_L(cpuState *state) {
-    uint16_t answer = state->A + state->L;
+    u16 answer = state->A + state->L;
 
     state->A = answer & 0xff;
 
@@ -1047,7 +1047,7 @@ void ADD_L(cpuState *state) {
 
 // 0x86
 void ADD_M(cpuState *state) {
-    uint16_t answer = state->A + state->memory[state->HL];
+    u16 answer = state->A + state->memory[state->HL];
 
     state->A = answer & 0xff;
 
@@ -1061,7 +1061,7 @@ void ADD_M(cpuState *state) {
 
 // 0x87
 void ADD_A(cpuState *state) {
-    uint16_t answer = state->A + state->A;
+    u16 answer = state->A + state->A;
 
     state->A = answer & 0xff;
 
@@ -1075,7 +1075,7 @@ void ADD_A(cpuState *state) {
 
 // 0x88
 void ADC_B(cpuState *state) {
-    uint16_t answer = state->A + state->B + state->flags.carry;
+    u16 answer = state->A + state->B + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1089,7 +1089,7 @@ void ADC_B(cpuState *state) {
 
 // 0x89
 void ADC_C(cpuState *state) {
-    uint16_t answer = state->A + state->C + state->flags.carry;
+    u16 answer = state->A + state->C + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1103,7 +1103,7 @@ void ADC_C(cpuState *state) {
 
 // 0x8a
 void ADC_D(cpuState *state) {
-    uint16_t answer = state->A + state->D + state->flags.carry;
+    u16 answer = state->A + state->D + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1117,7 +1117,7 @@ void ADC_D(cpuState *state) {
 
 // 0x8b
 void ADC_E(cpuState *state) {
-    uint16_t answer = state->A + state->E + state->flags.carry;
+    u16 answer = state->A + state->E + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1131,7 +1131,7 @@ void ADC_E(cpuState *state) {
 
 // 0x8c
 void ADC_H(cpuState *state) {
-    uint16_t answer = state->A + state->H + state->flags.carry;
+    u16 answer = state->A + state->H + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1145,7 +1145,7 @@ void ADC_H(cpuState *state) {
 
 // 0x8d
 void ADC_L(cpuState *state) {
-    uint16_t answer = state->A + state->L + state->flags.carry;
+    u16 answer = state->A + state->L + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1159,7 +1159,7 @@ void ADC_L(cpuState *state) {
 
 // 0x8e
 void ADC_M(cpuState *state) {
-    uint16_t answer = state->A + state->memory[state->HL] + state->flags.carry;
+    u16 answer = state->A + state->memory[state->HL] + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1173,7 +1173,7 @@ void ADC_M(cpuState *state) {
 
 // 0x8f
 void ADC_A(cpuState *state) {
-    uint16_t answer = state->A + state->A + state->flags.carry;
+    u16 answer = state->A + state->A + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1187,7 +1187,7 @@ void ADC_A(cpuState *state) {
 
 // 0x90
 void SUB_B(cpuState *state) {
-    uint16_t answer = state->A - state->B;
+    u16 answer = state->A - state->B;
 
     state->A = answer & 0xff;
 
@@ -1201,7 +1201,7 @@ void SUB_B(cpuState *state) {
 
 // 0x91
 void SUB_C(cpuState *state) {
-    uint16_t answer = state->A - state->C;
+    u16 answer = state->A - state->C;
 
     state->A = answer & 0xff;
 
@@ -1215,7 +1215,7 @@ void SUB_C(cpuState *state) {
 
 // 0x92
 void SUB_D(cpuState *state) {
-    uint16_t answer = state->A - state->D;
+    u16 answer = state->A - state->D;
 
     state->A = answer & 0xff;
 
@@ -1229,7 +1229,7 @@ void SUB_D(cpuState *state) {
 
 // 0x93
 void SUB_E(cpuState *state) {
-    uint16_t answer = state->A - state->E;
+    u16 answer = state->A - state->E;
 
     state->A = answer & 0xff;
 
@@ -1243,7 +1243,7 @@ void SUB_E(cpuState *state) {
 
 // 0x94
 void SUB_H(cpuState *state) {
-    uint16_t answer = state->A - state->H;
+    u16 answer = state->A - state->H;
 
     state->A = answer & 0xff;
 
@@ -1257,7 +1257,7 @@ void SUB_H(cpuState *state) {
 
 // 0x95
 void SUB_L(cpuState *state) {
-    uint16_t answer = state->A - state->L;
+    u16 answer = state->A - state->L;
 
     state->A = answer & 0xff;
 
@@ -1271,7 +1271,7 @@ void SUB_L(cpuState *state) {
 
 // 0x96
 void SUB_M(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->HL];
+    u16 answer = state->A - state->memory[state->HL];
 
     state->A = answer & 0xff;
 
@@ -1285,7 +1285,7 @@ void SUB_M(cpuState *state) {
 
 // 0x97
 void SUB_A(cpuState *state) {
-    uint16_t answer = state->A - state->A;
+    u16 answer = state->A - state->A;
 
     state->A = answer;
 
@@ -1299,7 +1299,7 @@ void SUB_A(cpuState *state) {
 
 // 0x98
 void SBB_B(cpuState *state) {
-    uint16_t answer = state->A - state->B - state->flags.carry;
+    u16 answer = state->A - state->B - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1313,7 +1313,7 @@ void SBB_B(cpuState *state) {
 
 // 0x99
 void SBB_C(cpuState *state) {
-    uint16_t answer = state->A - state->C - state->flags.carry;
+    u16 answer = state->A - state->C - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1327,7 +1327,7 @@ void SBB_C(cpuState *state) {
 
 // 0x9a
 void SBB_D(cpuState *state) {
-    uint16_t answer = state->A - state->D - state->flags.carry;
+    u16 answer = state->A - state->D - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1341,7 +1341,7 @@ void SBB_D(cpuState *state) {
 
 // 0x9b
 void SBB_E(cpuState *state) {
-    uint16_t answer = state->A - state->E - state->flags.carry;
+    u16 answer = state->A - state->E - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1355,7 +1355,7 @@ void SBB_E(cpuState *state) {
 
 // 0x9c
 void SBB_H(cpuState *state) {
-    uint16_t answer = state->A - state->H - state->flags.carry;
+    u16 answer = state->A - state->H - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1369,7 +1369,7 @@ void SBB_H(cpuState *state) {
 
 // 0x9d
 void SBB_L(cpuState *state) {
-    uint16_t answer = state->A - state->L - state->flags.carry;
+    u16 answer = state->A - state->L - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1383,7 +1383,7 @@ void SBB_L(cpuState *state) {
 
 // 0x9e
 void SBB_M(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->HL] - state->flags.carry;
+    u16 answer = state->A - state->memory[state->HL] - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1397,7 +1397,7 @@ void SBB_M(cpuState *state) {
 
 // 0x9f
 void SBB_A(cpuState *state) {
-    uint16_t answer = state->A - state->A - state->flags.carry;
+    u16 answer = state->A - state->A - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -1700,7 +1700,7 @@ void ORA_A(cpuState *state) {
 
 // 0xb8
 void CMP_B(cpuState *state) {
-    uint16_t answer = state->A - state->B;
+    u16 answer = state->A - state->B;
 
     state->flags.carry = (0xff < answer);
 
@@ -1715,7 +1715,7 @@ void CMP_B(cpuState *state) {
 
 // 0xb9
 void CMP_C(cpuState *state) {
-    uint16_t answer = state->A - state->C;
+    u16 answer = state->A - state->C;
 
     state->flags.carry = (0xff < answer);
 
@@ -1730,7 +1730,7 @@ void CMP_C(cpuState *state) {
 
 // 0xba
 void CMP_D(cpuState *state) {
-    uint16_t answer = state->A - state->D;
+    u16 answer = state->A - state->D;
 
     state->flags.carry = (0xff < answer);
 
@@ -1745,7 +1745,7 @@ void CMP_D(cpuState *state) {
 
 // 0xbb
 void CMP_E(cpuState *state) {
-    uint16_t answer = state->A - state->E;
+    u16 answer = state->A - state->E;
 
     state->flags.carry = (0xff < answer);
 
@@ -1760,7 +1760,7 @@ void CMP_E(cpuState *state) {
 
 // 0xbc
 void CMP_H(cpuState *state) {
-    uint16_t answer = state->A - state->H;
+    u16 answer = state->A - state->H;
 
     state->flags.carry = (0xff < answer);
 
@@ -1775,7 +1775,7 @@ void CMP_H(cpuState *state) {
 
 // 0xbd
 void CMP_L(cpuState *state) {
-    uint16_t answer = state->A - state->L;
+    u16 answer = state->A - state->L;
 
     state->flags.carry = (0xff < answer);
 
@@ -1790,7 +1790,7 @@ void CMP_L(cpuState *state) {
 
 // 0xbe
 void CMP_M(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->HL];
+    u16 answer = state->A - state->memory[state->HL];
 
     state->flags.carry = (0xff < answer);
 
@@ -1805,7 +1805,7 @@ void CMP_M(cpuState *state) {
 
 // 0xbf
 void CMP_A(cpuState *state) {
-    uint16_t answer = state->A - state->A;
+    u16 answer = state->A - state->A;
 
     state->flags.carry = (0xff < answer);
 
@@ -1879,7 +1879,7 @@ void PUSH_B(cpuState *state) {
 
 // 0xc6
 void ADI(cpuState *state) {
-    uint16_t answer = state->A + state->memory[state->PC + 1];
+    u16 answer = state->A + state->memory[state->PC + 1];
 
     state->A = answer & 0xff;
 
@@ -1947,7 +1947,7 @@ void CALL(cpuState *state) {
     // Code courtesy of http://www.emulator101.com/full-8080-emulation.html
     if (5 == readShort(state->memory, state->PC - 2)) {
         if (state->C == 9) {
-            uint16_t offset = state->DE;
+            u16 offset = state->DE;
             char *str = &state->memory[offset + 3];//skip the prefix bytes
             printf("\n");
             while (*str != '$')
@@ -1970,7 +1970,7 @@ void CALL(cpuState *state) {
 
 // 0xce
 void ACI(cpuState *state) {
-    uint16_t answer = state->A + state->memory[state->PC + 1] + state->flags.carry;
+    u16 answer = state->A + state->memory[state->PC + 1] + state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -2037,7 +2037,7 @@ void PUSH_D(cpuState *state) {
 
 // 0xd6
 void SUI(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->PC + 1];
+    u16 answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
 
@@ -2089,7 +2089,7 @@ void CC(cpuState *state) {
 
 // 0xde
 void SBI(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->PC + 1] - state->flags.carry;
+    u16 answer = state->A - state->memory[state->PC + 1] - state->flags.carry;
 
     state->A = answer & 0xff;
 
@@ -2137,7 +2137,7 @@ void JPO(cpuState *state) {
 
 // 0xe3
 void XTHL(cpuState *state) {
-    uint16_t temp = readShort(state->memory, state->SP);
+    u16 temp = readShort(state->memory, state->SP);
     writeShort(state->memory, state->SP, state->HL);
     state->HL = temp;
 
@@ -2165,7 +2165,7 @@ void PUSH_H(cpuState *state) {
 
 // 0xe6
 void ANI(cpuState *state) {
-    uint16_t answer = state->A & state->memory[state->PC + 1];
+    u16 answer = state->A & state->memory[state->PC + 1];
 
     state->A = answer & 0xff;
 
@@ -2212,7 +2212,7 @@ void JPE(cpuState *state) {
 
 // 0xeb
 void XCHG(cpuState *state) {
-    uint16_t temp = state->HL;
+    u16 temp = state->HL;
     state->HL = state->DE;
     state->DE = temp;
 
@@ -2232,7 +2232,7 @@ void CPE(cpuState *state) {
 
 // 0xee
 void XRI(cpuState *state) {
-    uint16_t answer = state->A ^ state->memory[state->PC + 1];
+    u16 answer = state->A ^ state->memory[state->PC + 1];
 
     state->A = answer & 0xff;
 
@@ -2263,7 +2263,7 @@ void RP(cpuState *state) {
 
 // 0xf1
 void POP_PSW(cpuState *state) {
-    uint16_t answer = readShort(state->memory, state->SP);
+    u16 answer = readShort(state->memory, state->SP);
     state->SP += 2;
 
     state->A = answer >> 8 & 0xff;
@@ -2304,7 +2304,7 @@ void PUSH_PSW(cpuState *state) {
 
 // 0xf6
 void ORI(cpuState *state) {
-    uint16_t answer = state->A | state->memory[state->PC + 1];
+    u16 answer = state->A | state->memory[state->PC + 1];
 
     state->A = answer & 0xff;
 
@@ -2363,7 +2363,7 @@ void CM(cpuState *state) {
 
 // 0xfe
 void CPI(cpuState *state) {
-    uint16_t answer = state->A - state->memory[state->PC + 1];
+    u16 answer = state->A - state->memory[state->PC + 1];
 
     state->flags.carry = (0xff < answer);
 

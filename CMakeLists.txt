@@ -22,4 +22,4 @@ endif(BUILD_FAST)
 
 add_compile_definitions(PATH="${CMAKE_CURRENT_LIST_DIR}")
 
-add_executable(8080EMU ./src/main.c ./src/handleState.c ./src/handleState.h ./src/opcodes.c ./src/opcodes.h src/handleSnapshots.c src/handleSnapshots.h)
+add_executable(8080EMU ./src/main.c ./src/handleState.c ./src/handleState.h ./src/opcodes.c ./src/opcodes.h src/intDefs.h)

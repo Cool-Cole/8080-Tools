@@ -5,9 +5,9 @@
 #ifndef INC_8080EMU_OPCODES_H
 #define INC_8080EMU_OPCODES_H
 
-#include <stdint.h>
 #include <stdlib.h>
 
+#include "intDefs.h"
 #include "handleState.h"
 
 // 0x00

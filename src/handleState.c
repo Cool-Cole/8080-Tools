@@ -15,25 +15,15 @@ struct cpuState initState(void) {
 
     state.flags.flagByte = 0x02;
 
-    // Was originally sizeof(uint8_t) but address-sanitize complained
+    // Was originally sizeof(u8) but address-sanitize complained
     // TODO: look into why it was complaining
-    state.memory = calloc(UINT16_MAX, sizeof(uint16_t));
+    state.memory = calloc(UINT16_MAX, sizeof(u16));
 
     if (NULL == state.memory) {
         //TODO: Find a way to notify caller if this function fails
         // EX: The equivalent of returning null
         exit(EXIT_FAILURE);
     }
-
-    cpuStateSnapshot *stateSnapshot = calloc(1, sizeof(struct cpuStateSnapshot));
-
-    if (NULL == stateSnapshot) {
-        //TODO: Find a way to notify caller if this function fails
-        // EX: The equivalent of returning null
-        exit(EXIT_FAILURE);
-    }
-
-    state.stateSnapshot = stateSnapshot;
 
     return state;
 }
@@ -55,7 +45,7 @@ int dumpState(struct cpuState *state, char *filename) {
 
 int emulateState(struct cpuState *state) {
 
-    uint8_t *currentOpcode = &state->memory[state->PC];
+    u8 *currentOpcode = &state->memory[state->PC];
 
     switch (*currentOpcode) {
         case 0x00:// NOP
