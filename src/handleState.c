@@ -13,11 +13,12 @@ struct cpuState initState(void) {
     // This has the benefit of nulling pointers as well
     cpuState state = {0};
 
+    // Initialize the necessary flag bytes
     state.flags.flagByte = 0x02;
 
-    // Was originally sizeof(u8) but address-sanitize complained
-    // TODO: look into why it was complaining
-    state.memory = calloc(UINT16_MAX, sizeof(u16));
+    // Change UINT16_MAX to UINT16_MAX + 1 due to 0 being an addressable index.
+    // TODO: look into why ASAN was complaining
+    state.memory = calloc(UINT16_MAX + 1, sizeof(u8));
 
     if (NULL == state.memory) {
         //TODO: Find a way to notify caller if this function fails
@@ -46,6 +47,8 @@ int dumpState(struct cpuState *state, char *filename) {
 int emulateState(struct cpuState *state) {
 
     u8 *currentOpcode = &state->memory[state->PC];
+
+    state->totalInstructionCounter += 1;
 
     switch (*currentOpcode) {
         case 0x00:// NOP
