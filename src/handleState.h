@@ -25,14 +25,6 @@ typedef struct cpuFlags {
         };
     };
 
-/*
-    u8 sign;
-    u8 zero;
-    u8 auxCarry;
-    u8 parity;
-    u8 carry;
-*/
-
 } cpuFlags;
 
 typedef struct cpuState {
