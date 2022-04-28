@@ -1,7 +1,3 @@
-//
-// Created by Cole on 3/29/2022.
-//
-
 #ifndef INC_8080EMU_INTDEFS_H
 #define INC_8080EMU_INTDEFS_H
 

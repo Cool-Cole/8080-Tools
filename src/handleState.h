@@ -25,19 +25,15 @@ typedef struct cpuFlags {
         };
     };
 
-/*
-    u8 sign;
-    u8 zero;
-    u8 auxCarry;
-    u8 parity;
-    u8 carry;
-*/
-
 } cpuFlags;
 
 typedef struct cpuState {
-    // WARNING: Little Endian dependant use of unions below
-    // WARNING: This code is not portable to Big Endian platforms.
+
+    /*
+     WARNING: Little-endian dependant use of unions below
+     WARNING: This code is not portable to big-endian platforms.
+     If you need to port this code to a big-endian architecture you will need to switch the order of the 8-bit registers.
+    */
 
     // HL register
     union {
@@ -73,6 +69,7 @@ typedef struct cpuState {
 
     u8 *memory;
 
+    // This is necessary to facilitate time travel debugging
     u64 totalInstructionCounter;
 
 } cpuState;
