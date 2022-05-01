@@ -1,12 +1,17 @@
-## Intel 8080 CPU Emulator
+# About
+
+This repository contains the necessary supporting code for my 8080 time travel debugger. In this repository 
+is a disassembler for the intel 8080 and an emulator for the architecture.
+
+Any feedback is welcome and constructive criticism is encouraged!
+
+
+# Intel 8080 CPU Emulator
 
 This project is an emulator for the intel 8080 that is designed to be interfaced with. Once full emulation is
 implemented I plan on implementing time travel debugging.
 
-This emulator will be the backend for two projects I plan on creating, a GDB like debugger and an emulator for Space
-Invaders.
-
-Any feedback is welcome and constructive criticism is encouraged!
+This emulator will be the backend for a GDB like debugger for the intel 8080.
 
 ## Compiling
 
@@ -15,18 +20,18 @@ Compiling normally
 1. `cmake CMakeLists.txt`
 2. `make`
 
-Compiling with Address Sanitizer (probably won't work on Windows)
+Compiling with Address Sanitizer (Linux only!)
 
 1. Set the `BUILD_ASAN` and `BUILD_DEBUG` options flags in `CMakeLists.txt` to `ON`
 2. `cmake CMakeLists.txt`
 3. `make`
 
-(Note: I don't know how to use CMake properly so if you try to switch between compiling a normal build and an ASAN 
-build you need to delete the `CMakeCache.txt` file)
+(Note: I am not very familiar with CMake so if you try to switch between compiling a normal build and an ASAN 
+build you may need to delete the `CMakeCache.txt` file)
 
 ## Running
 
-No way to config input rom yet! Sorry!
+This emulator is not meant to be used independently but running the emulator will test it against the testing rom.
 
 `./8080emu`
 
@@ -34,9 +39,13 @@ No way to config input rom yet! Sorry!
 
 - [x] Implement all opcodes (excluding special instructions that need to be handled at a higher level)
 - [x] Run the emulator against a testing rom
-- [ ] Run the emulator aginst multiple testing roms
-- [ ] Implement a GDB like debugging interface
-- [ ] Time Travel Debugging
+
+# Intel 8080 Disassembler
+
+This is an intel 8080 disassembler written in C. This is as test project that will serve as the disassembler for the 
+time travel debugger.
+
+Build scripts for the disassembler are currently not supported at this time.
 
 ## Sources
 

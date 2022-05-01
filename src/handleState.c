@@ -10,18 +10,17 @@
 struct cpuState initState(void) {
 
     // Initialize all values in the structure to zero
-    // This has the benefit of nulling pointers as well
+    // This action nulls pointers as well
     cpuState state = {0};
 
-    state.flags.flagByte = 0x02;
+    // Initialize the necessary flag bytes
+    state.flags._alwaysOne = 1;
 
-    // Was originally sizeof(u8) but address-sanitize complained
-    // TODO: look into why it was complaining
-    state.memory = calloc(UINT16_MAX, sizeof(u16));
+    // Change UINT16_MAX to UINT16_MAX + 1 due to 0 being an addressable index.
+    state.memory = calloc(UINT16_MAX + 1, sizeof(u8));
 
     if (NULL == state.memory) {
-        //TODO: Find a way to notify caller if this function fails
-        // EX: The equivalent of returning null
+        //TODO: Find a way to notify caller if this function fails instead of exiting (something like the equivalent of returning null)
         exit(EXIT_FAILURE);
     }
 
@@ -45,7 +44,10 @@ int dumpState(struct cpuState *state, char *filename) {
 
 int emulateState(struct cpuState *state) {
 
+    // Read the current instruction from memory
     u8 *currentOpcode = &state->memory[state->PC];
+
+    state->totalInstructionCounter += 1;
 
     switch (*currentOpcode) {
         case 0x00:// NOP
