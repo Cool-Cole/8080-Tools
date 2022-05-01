@@ -14,7 +14,7 @@ struct cpuState initState(void) {
     cpuState state = {0};
 
     // Initialize the necessary flag bytes
-    state.flags.flagByte = 0x02;
+    state.flags._alwaysOne = 1;
 
     // Change UINT16_MAX to UINT16_MAX + 1 due to 0 being an addressable index.
     state.memory = calloc(UINT16_MAX + 1, sizeof(u8));
