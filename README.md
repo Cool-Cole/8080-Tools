@@ -3,6 +3,9 @@
 This repository contains the necessary supporting code for my 8080 time travel debugger. In this repository 
 is a disassembler for the intel 8080 and an emulator for the architecture.
 
+This repository exists because I originally developed both the disassembler and the emulator separately. I would 
+like to keep standalone copies of each in this repository for future reference.
+
 Any feedback is welcome and constructive criticism is encouraged!
 
 
@@ -42,10 +45,9 @@ This emulator is not meant to be used independently but running the emulator wil
 
 # Intel 8080 Disassembler
 
-This is an intel 8080 disassembler written in C. This is as test project that will serve as the disassembler for the 
-time travel debugger.
+The intel 8080 disassembler, like the emulator, is written in C.
 
-Build scripts for the disassembler are currently not supported at this time.
+Build scripts for the disassembler are currently not included in this repository at this time.
 
 ## Sources
 
